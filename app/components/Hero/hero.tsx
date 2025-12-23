@@ -103,7 +103,7 @@ export default function Hero() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="/video/Space_Ship_Video_Loop.mp4" type="video/mp4" />
+        <source src="/video/v2.mp4" type="video/mp4" />
       </video>
       
       {/* Dark overlay for better text readability */}

@@ -56,9 +56,9 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-20">
             <a href="#" className="nav-item flex items-center gap-2">
               <img 
-                src="/rec-logo-transparent.png" 
+                src="/rec.png" 
                 alt="REC Logo" 
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </a>
 

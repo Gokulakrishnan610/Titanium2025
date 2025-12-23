@@ -11,7 +11,7 @@
 }
 
 .backgroundEffect {
-  background-image: url('/forge.jpg');
+  /* background-image: url('/forge.jpg'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
