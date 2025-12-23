@@ -1,0 +1,20 @@
+  .radial-carousel-container {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='32' viewBox='0 0 80 32'%3E%3Crect width='80' height='32' rx='16' fill='black'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='monospace' font-size='14' font-weight='600'%3EDRAG%3C/text%3E%3C/svg%3E")
+      40 16, auto;
+  }
+  .cartoon-heading {
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #FFD700;
+    -webkit-text-stroke: 3px #000;
+    paint-order: stroke fill;
+    text-shadow: 
+      4px 4px 0px #000,
+      8px 8px 0px rgba(0,0,0,0.2);
+    letter-spacing: 4px;
+    transform: skew(-2deg);
+  }
+  .radial-carousel-container:active {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='32' viewBox='0 0 80 32'%3E%3Crect width='80' height='32' rx='16' fill='black'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='monospace' font-size='14' font-weight='600'%3EDRAG%3C/text%3E%3C/svg%3E")
+      40 16, auto;
+  }
