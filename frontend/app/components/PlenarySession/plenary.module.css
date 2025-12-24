@@ -1,0 +1,219 @@
+.humanFigureXL {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mysteryMaskXL {
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 32px rgba(192,192,192,0.38));
+  opacity: 0.98;
+  z-index: 1;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+.humanFigureLarge {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mysteryMaskLarge {
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(192,192,192,0.35));
+  opacity: 0.96;
+  z-index: 1;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+
+.mysteryMask {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(192,192,192,0.3));
+  opacity: 0.92;
+  z-index: 1;
+  user-drag: none;
+  -webkit-user-drag: none;
+}
+.plenarySection {
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+}
+
+.gridPattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.02;
+  background-image: 
+    linear-gradient(rgba(192, 192, 192, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(192, 192, 192, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  animation: gridFloat 20s ease-in-out infinite;
+}
+
+@keyframes gridFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.scrollContainer {
+  will-change: transform;
+}
+
+
+.sessionCard {
+  height: 600px;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, 
+    rgba(18, 18, 18, 0.95) 0%,
+    rgba(28, 28, 28, 0.95) 50%,
+    rgba(18, 18, 18, 0.95) 100%
+  );
+}
+
+
+@keyframes borderShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.dayBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(192, 192, 192, 0.1), rgba(161, 161, 170, 0.05));
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  color: #C0C0C0;
+}
+
+.humanFigure {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.figureGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192, 192, 192, 0.15) 0%, transparent 70%);
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.figurePart {
+  fill: #000;
+  filter: drop-shadow(0 0 20px rgba(192, 192, 192, 0.3));
+}
+
+.questionMark {
+  fill: rgba(192, 192, 192, 0.8);
+  filter: drop-shadow(0 0 10px rgba(192, 192, 192, 0.5));
+  animation: questionPulse 2s ease-in-out infinite;
+}
+
+@keyframes questionPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.mysteryLabel {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(192, 192, 192, 0.6);
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .sessionCard {
+    width: 85vw !important;
+    height: 640px !important;
+  }
+
+  .dayBadge {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sessionCard {
+    transition: all 0.3s ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gridFloat,
+  .borderShimmer,
+  .pulseGlow,
+  .questionPulse {
+    animation: none;
+  }
+}
+
+
+@keyframes bounce-x {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+:global(.animate-bounce-x) {
+  animation: bounce-x 1s ease-in-out infinite;
+}

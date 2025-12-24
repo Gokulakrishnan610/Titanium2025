@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { Menu, X } from "lucide-react";
 
@@ -16,14 +16,30 @@ const navLinks = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    const plenaryEl = document.querySelector(".plenarySection");
+    if (!plenaryEl) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gsap.to(navRef.current, { y: "-100%", duration: 0.5, ease: "power2.out" });
+          } else {
+            gsap.to(navRef.current, { y: "0%", duration: 0.5, ease: "power2.out" });
+          }
+        });
+      },
+      { root: null, threshold: 0.05 }
+    );
+    observer.observe(plenaryEl);
+    const scrollHandler = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", scrollHandler);
     };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -46,7 +62,8 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        ref={navRef}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 will-change-transform ${
           isScrolled
             ? "bg-titanium-black/90 backdrop-blur-xl border-b border-titanium-silver/10"
             : "bg-transparent"

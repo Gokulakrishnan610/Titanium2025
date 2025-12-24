@@ -3,6 +3,7 @@ import Navbar from "./components/NavBar/navbar";
 import About from "./components/About/about";
 import Speakers from "./components/Speakers/speakers";
 import Events from "./components/Events/events";
+import PlenarySessions from "./components/PlenarySession/plenary";
 import Workshops from "./components/Workshops/workshops";
 import Schedule from "./components/Schedule/schedule";
 import Sponsors from "./components/Sponsors/sponsors";
@@ -17,6 +18,7 @@ export default function Home() {
       <About/>
       <Speakers/>
       <Events/>
+      <PlenarySessions/>
       <Workshops/>
       <Schedule/>
       <Sponsors/>
