@@ -238,3 +238,13 @@
 :global(.animate-bounce-x) {
   animation: bounce-x 1s ease-in-out infinite;
 }
+
+
+@media (max-width: 380px) {
+  #section {
+    transform: scale(0.75);
+    transform-origin: top left;
+    width: 133.33vw;
+    overflow-x: auto;
+  }
+}

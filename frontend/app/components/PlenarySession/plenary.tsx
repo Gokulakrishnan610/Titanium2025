@@ -179,6 +179,7 @@ export default function PlenarySessions({
     <section
       ref={sectionRef}
       className={cn("relative w-full bg-titanium-black overflow-x-hidden", styles.plenarySection)}
+      id="section"
     >
       
       <div ref={containerRef} className="relative min-h-screen">
