@@ -155,7 +155,7 @@ export default function PlenarySessions({
     const ctx = gsap.context(() => {
 
       const totalScrollWidth = scrollContainer.scrollWidth - window.innerWidth;
-      
+
       gsap.to(scrollContainer, {
         x: () => `-${totalScrollWidth}px`,
         ease: "none",
@@ -180,14 +180,23 @@ export default function PlenarySessions({
       ref={sectionRef}
       className={cn("relative w-full bg-titanium-black overflow-x-hidden", styles.plenarySection)}
     >
-      
+
       <div ref={containerRef} className="relative min-h-screen">
 
         <div className="plenary-header absolute top-20 left-0 right-0 z-10 px-4 md:px-8">
-          <div className="mb-4">
-            <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold shimmer">
-              Plenary Sessions
-            </h2>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 mb-4">
+            <div>
+              <span className="inline-block text-xs md:text-sm font-mono text-titanium-metallic uppercase tracking-widest mb-2 md:mb-4">
+                Unlock Knowledge
+              </span>
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold">
+                <span className="text-titanium-gradient">Plenary</span>{" "}
+                <span className="text-titanium-light">Sessions</span>
+              </h2>
+            </div>
+            <p className="text-titanium-metallic text-sm md:text-lg max-w-xl text-left md:text-right pb-1">
+              Engage with industry leaders and visionaries as they share insights on the future of technology and innovation.
+            </p>
           </div>
         </div>
         <div
@@ -286,7 +295,7 @@ export default function PlenarySessions({
                           <Image
                             src="/personMask.png"
                             alt="Mystery Speaker Mask"
-                            className={cn(styles.mysteryMaskXL, isMobile && styles.mysteryMaskMobile)}
+                            className={cn(styles.mysteryMaskXL, isMobile && styles.mysteryMaskMobile, "translate-y-11.5")}
                             width={isMobile ? 150 : 400}
                             height={isMobile ? 150 : 400}
                             draggable={false}
