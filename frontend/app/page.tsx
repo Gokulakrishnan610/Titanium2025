@@ -4,6 +4,7 @@ import About from "./components/About/about";
 import Speakers from "./components/Speakers/speakers";
 import RadialEvents from "./components/RadialEvents/radialevents";
 import PlenarySessions from "./components/PlenarySession/plenary";
+import DisplayZones from "./components/DisplayZones/DisplayZones";
 import Workshops from "./components/Workshops/workshops";
 import Schedule from "./components/Schedule/schedule";
 import Sponsors from "./components/Sponsors/sponsors";
@@ -14,15 +15,16 @@ export default function Home() {
   return (
     <SmoothScroll>
       <ScrollMask />
-      <Navbar/>
-      <About/>
-      <Speakers/>
-      <RadialEvents/>
-      <PlenarySessions/>
-      <Workshops/>
-      <Schedule/>
-      <Sponsors/>
-      <Footer/>
+      <Navbar />
+      <About />
+      <Speakers />
+      <RadialEvents />
+      <PlenarySessions />
+      <DisplayZones />
+      <Workshops />
+      <Schedule />
+      <Sponsors />
+      <Footer />
     </SmoothScroll>
   );
 }
