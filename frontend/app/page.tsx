@@ -5,11 +5,12 @@ import Speakers from "./components/Speakers/speakers";
 import RadialEvents from "./components/RadialEvents/radialevents";
 import PlenarySessions from "./components/PlenarySession/plenary";
 import DisplayZones from "./components/DisplayZones/DisplayZones";
+import ExperienceZone from "./components/ExperienceZone/ExperienceZone";
 import Workshops from "./components/Workshops/workshops";
 import Schedule from "./components/Schedule/schedule";
-import Sponsors from "./components/Sponsors/sponsors";
 import Footer from "./components/Footer/footer";
 import SmoothScroll from "./components/SmoothScroll";
+import Sponsors from "./components/Sponsors/sponsors";
 
 export default function Home() {
   return (
@@ -21,9 +22,10 @@ export default function Home() {
       <RadialEvents />
       <PlenarySessions />
       <DisplayZones />
+      <ExperienceZone />
       <Workshops />
       <Schedule />
-      <Sponsors />
+      <Sponsors/>
       <Footer />
     </SmoothScroll>
   );
