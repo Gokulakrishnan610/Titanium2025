@@ -202,7 +202,7 @@ export default function PlenarySessions({
         <div
           ref={scrollContainerRef}
           className={cn(
-            "flex gap-4 md:gap-8 pt-48 md:pt-64 pb-16 md:pb-32 pl-4 md:pl-8 pr-4 md:pr-8",
+            "flex gap-4 md:gap-8 pt-60 md:pt-64 pb-16 md:pb-32 pl-4 md:pl-8 pr-4 md:pr-8",
             isMobile ? "flex-col items-center" : "items-center",
             styles.scrollContainer
           )}
