@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <div class="module">
+        <div class="header">
+            {% comment %} Logo (inline) {% endcomment %}
+            <img src="{{ logo_url }}" alt="DEVS Logo" class="logo">
+            <h1>{{ title }}</h1>
+        </div>
+
+        <form method="post" action="">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <h2>Available Users</h2>
+                <p>Select users to book for <strong>{{ event.event_name }}</strong></p>
+
+                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #333333; padding: 10px; background-color: #1a1a1a;">
+                    {% for user in available_users %}
+                    <label style="display: block; margin: 5px 0; color: #ffffff;">
+                        <input type="checkbox" name="users" value="{{ user.id }}">
+                        <strong>{{ user.username }}</strong> ({{ user.email }})
+                        {% if user.first_name or user.last_name %}
+                            - <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+                        {% endif %}
+                    </label>
+                    {% empty %}
+                    <p style="color: #ffffff;">No users available for booking.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="submit-row">
+                <input type="submit" value="Book Selected Users" class="default">
+                <a href="{% url 'admin:event_event_changelist' %}" class="cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+body { background-color: #000000; color: #ffffff; }
+#content-main { background-color: #000000; }
+.module { background-color: #1a1a1a; border: 1px solid #333333; color: #ffffff; }
+.header { text-align: center; padding: 20px; background-color: #000000; border-radius: 10px; margin-bottom: 20px; }
+.logo { max-width: 120px; height: auto; margin-bottom: 10px; }
+.header h1 { color: #ffffff; margin: 0; font-weight: bold; }
+.submit-row { padding: 15px; background: #1a1a1a; text-align: right; border-top: 1px solid #333333; }
+.submit-row input, .submit-row a { padding: 8px 16px; border-radius: 4px; text-decoration: none; display: inline-block; margin-left: 10px; font-weight: bold; }
+.submit-row .default { background: #007bff; color: white; border: none; }
+.submit-row .cancel { background: #6c757d; color: white; }
+.form-row { padding: 15px; border-bottom: 1px solid #333333; color: #ffffff; }
+.form-row h2 { color: #007bff; font-weight: bold; }
+.form-row p { color: #ffffff; }
+</style>
+{% endblock %}

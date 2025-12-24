@@ -1,0 +1,236 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/*fontFamily: "'Space Grotesk', Arial, sans-serif" */
+@import "tailwindcss";
+
+/* Hide scrollbars globally */
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+
+@font-face {
+  font-family: 'Soleil Bold';
+  src: url('/fonts/SoleilBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rough Motion';
+  src: url('/fonts/RoughMotion.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Antebas';
+  src: url('/fonts/antebas-bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-Soleil-Bold: 'Soleil Bold', sans-serif;
+  --font-Rough-Motion: 'Rough Motion', cursive;
+  --font-antebas: 'Antebas', sans-serif;
+  
+  /* Radix UI CSS variables */
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #171717;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #171717;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #171717;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #171717;
+  --radius: 0.5rem;
+  
+  /* Sidebar color variables - scoped to prevent conflicts */
+  --sidebar-background: #1e1f23;
+  --sidebar-foreground: #ffffff;
+  --sidebar-accent: #2a2b2f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #3a3b3f;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ededed;
+    
+    /* Dark mode Radix UI variables */
+    --card: #171717;
+    --card-foreground: #ededed;
+    --popover: #171717;
+    --popover-foreground: #ededed;
+    --primary: #ededed;
+    --primary-foreground: #171717;
+    --secondary: #262626;
+    --secondary-foreground: #ededed;
+    --muted: #262626;
+    --muted-foreground: #a3a3a3;
+    --accent: #262626;
+    --accent-foreground: #ededed;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --border: #262626;
+    --input: #262626;
+    --ring: #ededed;
+    
+    /* Dark mode sidebar colors */
+    --sidebar-background: #1a1b1f;
+    --sidebar-foreground: #ffffff;
+    --sidebar-accent: #2a2b2f;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #3a3b3f;
+    --sidebar-primary: #3b82f6;
+    --sidebar-primary-foreground: #ffffff;
+  }
+}
+
+/* Sidebar color variables - scoped to prevent conflicts */
+:root {
+  --sidebar-background: #1e1f23;
+  --sidebar-foreground: #ffffff;
+  --sidebar-accent: #2a2b2f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #3a3b3f;
+  --sidebar-primary: #3b82f6;
+  --sidebar-primary-foreground: #ffffff;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Space Grotesk', Arial, sans-serif;
+  background-color: #000000 !important; /* Force black background to prevent conflicts */
+}
+
+
+/* Profile page specific background to prevent conflicts */
+.profile-page-background {
+  background-color: #000000 !important;
+  /* Reset any sidebar-related CSS variables that might affect this page */
+  --sidebar-background: #000000 !important;
+  --sidebar-foreground: #ffffff !important;
+  --sidebar-accent: #000000 !important;
+  --sidebar-accent-foreground: #ffffff !important;
+  --sidebar-border: #000000 !important;
+}
+
+/* Main page specific background to prevent conflicts */
+.main-page-background {
+  background-color: #000000 !important;
+}
+/* Profile page card background utility */
+.profile-grey-card, .profile-grey-card.profile-grey-card {
+  background-color: #1e1f23 !important;
+}
+
+/* VHS/CRT Terminal Effects */
+@keyframes scanlines {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes glitch {
+  0%, 100% { text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
+  50% { text-shadow: 0 0 5px #00ff00, 0 0 12px #00ff00; }
+}
+
+.terminal-screen {
+  position: relative;
+  overflow: hidden !important;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, #000000 0%, #0a0a0a 100%);
+}
+
+.terminal-screen::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.terminal-screen::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-screen::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.terminal-screen {
+  -ms-overflow-style: none;
+}
+
+.crt-flicker {
+  animation: crt-flicker 0.1s infinite, rgb-shift 0.4s infinite;
+}
+
+.rgb-shift {
+  animation: rgb-shift 0.4s infinite;
+}
+
+.terminal-text-glow {
+  text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+  animation: glitch 6s ease-in-out infinite;
+}
+
+.terminal-header-glow {
+  text-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00;
+  animation: glitch 8s ease-in-out infinite;
+}
+
+.terminal-content {
+  overflow: hidden !important;
+  width: 100%;
+  height: 100%;
+}
+
+.terminal-content::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.terminal-content {
+  -ms-overflow-style: none;
+}
+

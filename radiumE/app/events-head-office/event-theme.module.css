@@ -1,0 +1,124 @@
+/* Apply theme variables when .theme class is present */
+.theme {
+  /* Base */
+  --background: #2b2118;
+  --foreground: #efe7dc;
+
+  /* Surfaces */
+  --card: #35281d;
+  --card-foreground: var(--foreground);
+  --popover: #35281d;
+  --popover-foreground: var(--foreground);
+
+  /* Brand */
+  --primary: #d9c3a2;
+  --primary-foreground: #2b2118;
+
+  /* Neutrals */
+  --secondary: #3a2d21;
+  --secondary-foreground: #efe7dc;
+
+  /* Muted/accents */
+  --muted: #3a2d21;
+  --muted-foreground: #b7a895;
+  --accent: #3a2d21;
+  --accent-foreground: #efe7dc;
+
+  /* States */
+  --destructive: #7a3a2f;
+  --destructive-foreground: #ffe9e3;
+
+  /* Borders/forms */
+  --border: #4a3a2c;
+  --input: #4a3a2c;
+  --ring: #6a5441;
+
+  /* Optional sidebar tokens if needed by UI kit */
+  --sidebar: #33271e;
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: #3a2d21;
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: #4a3a2c;
+  --sidebar-ring: #6a5441;
+}
+
+.eventTitleInput {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+/* If you toggle a .dark class on <html>, you can scope a darker variant here. */
+.dark .theme {
+  --background: #231a13;
+  --foreground: #efe7dc;
+
+  --card: #2c2118;
+  --card-foreground: var(--foreground);
+  --popover: #2c2118;
+  --popover-foreground: var(--foreground);
+
+  --primary: #e3cfb2;
+  --primary-foreground: #1d1611;
+
+  --secondary: #34281f;
+  --secondary-foreground: var(--foreground);
+
+  --muted: #34281f;
+  --muted-foreground: #b7a895;
+
+  --accent: #34281f;
+  --accent-foreground: var(--foreground);
+
+  --destructive: #6c342b;
+  --destructive-foreground: #ffe9e3;
+
+  --border: #443529;
+  --input: #443529;
+  --ring: #655241;
+
+  --sidebar: #20170f;
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: #322518;
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: #443529;
+  --sidebar-ring: #655241;
+}
+
+/* Custom scrollbar styling to match theme */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted-foreground);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background-color: var(--foreground);
+}
+
+/* Firefox scrollbar styling */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}

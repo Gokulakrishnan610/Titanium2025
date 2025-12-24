@@ -1,0 +1,543 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<style>
+    #content {
+        background: #f5f5f5 !important;
+    }
+
+    .api-tester-container {
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    .api-tester-container h1 {
+        color: #333 !important;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .api-group {
+        margin-bottom: 30px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .api-group-header {
+        background: #417690;
+        color: white !important;
+        padding: 15px 20px;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    .api-endpoint {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+    }
+
+    .api-endpoint:last-child {
+        border-bottom: none;
+    }
+
+    .api-endpoint:hover {
+        background: #f8f9fa;
+    }
+
+    .endpoint-info {
+        flex: 1;
+        margin-right: 15px;
+    }
+
+    .endpoint-path {
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        color: #333 !important;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .endpoint-name {
+        font-size: 12px;
+        color: #666 !important;
+    }
+
+    .endpoint-methods {
+        display: flex;
+        gap: 5px;
+        margin-right: 15px;
+        flex-wrap: wrap;
+    }
+
+    .method-badge {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .method-get {
+        background: #61affe !important;
+        color: white !important;
+    }
+
+    .method-post {
+        background: #49cc90 !important;
+        color: white !important;
+    }
+
+    .method-put {
+        background: #fca130 !important;
+        color: white !important;
+    }
+
+    .method-patch {
+        background: #50e3c2 !important;
+        color: white !important;
+    }
+
+    .method-delete {
+        background: #f93e3e !important;
+        color: white !important;
+    }
+
+    .test-button {
+        background: #417690 !important;
+        color: white !important;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none !important;
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .test-button:hover {
+        background: #2e5266 !important;
+        color: white !important;
+        text-decoration: none !important;
+    }
+
+    .info-box {
+        background: #e7f2fa;
+        border-left: 4px solid #417690;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+
+    .info-box h3 {
+        margin-top: 0;
+        color: #417690 !important;
+        font-size: 18px;
+    }
+
+    .info-box p {
+        color: #333 !important;
+        line-height: 1.6;
+        margin: 10px 0;
+    }
+
+    .info-box ul {
+        color: #333 !important;
+        margin: 10px 0;
+        padding-left: 20px;
+    }
+
+    .info-box li {
+        color: #333 !important;
+        margin: 5px 0;
+    }
+
+    .info-box strong {
+        color: #417690 !important;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content h2 {
+        color: #333 !important;
+        margin-top: 0;
+    }
+
+    .modal-content p {
+        color: #333 !important;
+    }
+
+    .modal-content strong {
+        color: #417690 !important;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 20px;
+    }
+
+    .close:hover {
+        color: #000;
+    }
+
+    .param-example {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        font-family: 'Courier New', monospace;
+        margin: 10px 0;
+        color: #333 !important;
+        border: 1px solid #ddd;
+    }
+
+    #paramExample {
+        color: #333 !important;
+        line-height: 1.8;
+    }
+
+    #paramExample strong {
+        color: #417690 !important;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .param-warning {
+        color: #f93e3e !important;
+        font-size: 11px;
+        margin-left: 8px;
+        font-weight: 600;
+    }
+
+    /* ========== RESPONSIVE STYLES ========== */
+    
+    /* Tablet and below (768px) */
+    @media (max-width: 768px) {
+        .api-tester-container {
+            padding: 15px;
+        }
+
+        .api-tester-container h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .api-group {
+            margin-bottom: 20px;
+        }
+
+        .api-group-header {
+            padding: 12px 15px;
+            font-size: 16px;
+        }
+
+        .api-endpoint {
+            padding: 12px 15px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .endpoint-info {
+            margin-right: 0;
+            width: 100%;
+        }
+
+        .endpoint-path {
+            font-size: 13px;
+            word-break: break-all;
+        }
+
+        .endpoint-methods {
+            margin-right: 0;
+            width: 100%;
+        }
+
+        .test-button {
+            width: 100%;
+            text-align: center;
+            padding: 10px 16px;
+        }
+
+        .info-box {
+            padding: 12px 15px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+        }
+
+        .info-box p, .info-box li {
+            font-size: 13px;
+        }
+
+        .modal-content {
+            width: 90%;
+            margin: 20% auto;
+            padding: 20px;
+        }
+
+        .modal-content h2 {
+            font-size: 20px;
+        }
+
+        .param-example {
+            padding: 10px;
+            font-size: 12px;
+            word-break: break-all;
+        }
+    }
+
+    /* Mobile (480px and below) */
+    @media (max-width: 480px) {
+        .api-tester-container {
+            padding: 10px;
+        }
+
+        .api-tester-container h1 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .api-group {
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .api-group-header {
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+
+        .api-endpoint {
+            padding: 10px 12px;
+            gap: 8px;
+        }
+
+        .endpoint-path {
+            font-size: 12px;
+        }
+
+        .endpoint-name {
+            font-size: 11px;
+        }
+
+        .method-badge {
+            padding: 4px 8px;
+            font-size: 10px;
+        }
+
+        .test-button {
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+
+        .info-box {
+            padding: 10px 12px;
+            margin-bottom: 15px;
+        }
+
+        .info-box h3 {
+            font-size: 14px;
+        }
+
+        .info-box p, .info-box li {
+            font-size: 12px;
+        }
+
+        .param-warning {
+            display: block;
+            margin-left: 0;
+            margin-top: 5px;
+        }
+
+        .modal-content {
+            width: 95%;
+            margin: 30% auto;
+            padding: 15px;
+        }
+
+        .modal-content h2 {
+            font-size: 18px;
+        }
+
+        .close {
+            font-size: 24px;
+        }
+    }
+
+    /* Large screens (1200px and above) */
+    @media (min-width: 1200px) {
+        .api-tester-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .modal-content {
+            max-width: 700px;
+        }
+    }
+
+    /* Print styles */
+    @media print {
+        .test-button {
+            display: none;
+        }
+
+        .modal {
+            display: none !important;
+        }
+
+        .api-endpoint {
+            page-break-inside: avoid;
+        }
+
+        .api-group {
+            page-break-inside: avoid;
+        }
+    }
+</style>
+
+<script>
+    function showParamInfo(path) {
+        const modal = document.getElementById('paramModal');
+        const pathDisplay = document.getElementById('paramPath');
+        const exampleDisplay = document.getElementById('paramExample');
+
+        // Extract parameters from path
+        const params = path.match(/\{(\w+)\}/g);
+        const paramNames = params ? params.map(p => p.replace(/[{}]/g, '')) : [];
+
+        // Create example URL
+        let exampleUrl = path;
+        paramNames.forEach(param => {
+            if (param === 'pk' || param === 'id') {
+                exampleUrl = exampleUrl.replace(`{${param}}`, '1');
+            } else {
+                exampleUrl = exampleUrl.replace(`{${param}}`, 'example-value');
+            }
+        });
+
+        pathDisplay.textContent = path;
+        exampleDisplay.innerHTML = `
+        <strong>Example URL:</strong><br>
+        ${exampleUrl}<br><br>
+        <strong>Parameters:</strong><br>
+        ${paramNames.map(p => `• ${p}: Replace with actual value`).join('<br>')}
+        <br><br>
+        <strong>To test:</strong><br>
+        Replace the parameters in the URL with actual values from your database and visit the URL directly.
+    `;
+
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('paramModal').style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+        const modal = document.getElementById('paramModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="api-tester-container">
+    <h1 style="color: black;">API Endpoint Tester</h1>
+
+    <div class="info-box">
+        <h3>How to use:</h3>
+        <p>Click "Test API" to open the browsable API interface for any endpoint. You'll be able to:</p>
+        <ul>
+            <li>View endpoint documentation</li>
+            <li>See request/response formats</li>
+            <li>Make test requests directly from your browser</li>
+            <li>View response data in real-time</li>
+        </ul>
+        <p><strong>Note:</strong> You're authenticated as an admin user, so you can test all endpoints including
+            protected ones.</p>
+    </div>
+
+    {% for app_name, endpoints in grouped_endpoints.items %}
+    <div class="api-group">
+        <div class="api-group-header">
+            {{ app_name }}
+        </div>
+        {% for endpoint in endpoints %}
+        <div class="api-endpoint">
+            <div class="endpoint-info">
+                <div class="endpoint-path">
+                    {{ endpoint.path }}
+                    {% if endpoint.has_params %}
+                    <span class="param-warning">⚠ Requires parameters</span>
+                    {% endif %}
+                </div>
+                {% if endpoint.name %}
+                <div class="endpoint-name">{{ endpoint.name }}</div>
+                {% endif %}
+            </div>
+            <div class="endpoint-methods">
+                {% for method in endpoint.methods %}
+                <span class="method-badge method-{{ method|lower }}">{{ method }}</span>
+                {% endfor %}
+            </div>
+            {% if endpoint.has_params %}
+            <button class="test-button" onclick="showParamInfo('{{ endpoint.path }}')" style="background: #666;">
+                View Info
+            </button>
+            {% else %}
+            <a href="{{ endpoint.path }}" class="test-button" target="_blank">Test API</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Parameter Info Modal -->
+<div id="paramModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Parameterized Endpoint</h2>
+        <p><strong>Endpoint Pattern:</strong></p>
+        <div class="param-example" id="paramPath"></div>
+        <div id="paramExample"></div>
+    </div>
+</div>
+{% endblock %}
