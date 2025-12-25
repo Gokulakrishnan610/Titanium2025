@@ -155,7 +155,7 @@ const ExperienceZone = () => {
             })
 
             entryTl.set(retroBgExitRef.current, {
-                maskImage: `radial-gradient(circle at center, black 100%, transparent 100%)`
+                maskImage: `radial-gradient(circle at center, black 50%, transparent 90%)`
             })
 
             entryTl.to(vrExitImageRef.current, {
@@ -173,7 +173,7 @@ const ExperienceZone = () => {
                 maskImage: exitMaskEnd,
                 duration: 2,
                 ease: "power2.inOut"
-            }, "<")
+            }, "<+=0.4")
 
 
             entryTl.to(vrExitImageRef.current, {
@@ -209,10 +209,9 @@ const ExperienceZone = () => {
                 <div ref={vrEntryRef} className={styles.vrEntryContainer}>
                     <div className={styles.darkBase} />
                     <div ref={retroBgRef} className={styles.retroBgPreview}>
-                        <div className={styles.starsOverlay} />
-                        <div className={styles.retroSun} />
-                        <div className={styles.horizonGlow} />
-                        <div className={styles.retroGrid} />
+                        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+                            <source src="/TitaniumBg.mp4" type="video/mp4" />
+                        </video>
                     </div>
                     <div ref={vrImageRef} className={styles.vrImage} />
                     <div ref={introTextRef} className={styles.introText}>
@@ -223,10 +222,9 @@ const ExperienceZone = () => {
                 </div>
                 <div ref={retroWorldRef} className={styles.retroWorld}>
                     <div className={styles.retroBackground}>
-                        <div className={styles.starsOverlay} />
-                        <div className={styles.retroSun} />
-                        <div className={styles.horizonGlow} />
-                        <div className={styles.retroGrid} />
+                        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+                            <source src="/TitaniumBg.mp4" type="video/mp4" />
+                        </video>
                     </div>
                     <div className={`${styles.contentSection} vr-ar-section`}>
                         <h2 className={styles.sectionTitle}>VR & AR Experiences</h2>
@@ -262,10 +260,9 @@ const ExperienceZone = () => {
                 <div ref={vrExitRef} className={styles.vrExitContainer}>
                     <div className={styles.darkBase} />
                     <div ref={retroBgExitRef} className={styles.retroBgPreview}>
-                        <div className={styles.starsOverlay} />
-                        <div className={styles.retroSun} />
-                        <div className={styles.horizonGlow} />
-                        <div className={styles.retroGrid} />
+                        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+                            <source src="/TitaniumBg.mp4" type="video/mp4" />
+                        </video>
                     </div>
                     <div ref={vrExitImageRef} className={styles.vrImage} />
                     <div ref={exitTextRef} className={styles.exitText}>

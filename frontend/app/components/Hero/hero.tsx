@@ -77,14 +77,7 @@ export default function Hero() {
         { opacity: 1, y: 0, stagger: 0.15, duration: 0.6, ease: "power3.out", delay: 2 }
       );
 
-      gsap.to(".floating-shape", {
-        y: -20,
-        duration: 3,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        stagger: { each: 0.5, from: "random" },
-      });
+
     }, heroRef);
 
     return () => ctx.revert();
@@ -103,29 +96,27 @@ export default function Hero() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="/video/v2.mp4" type="video/mp4" />
+        <source src="/TitaniumBgB.mp4" type="video/mp4" />
       </video>
-      
+
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-titanium-black/60 z-[1]" />
- 
+
       <div className="absolute inset-0 grid-pattern opacity-50 z-[2]" />
 
       <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] bg-titanium-silver/5 rounded-full blur-[150px] floating-shape z-[3]" />
       <div className="absolute bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-titanium-metallic/5 rounded-full blur-[120px] floating-shape z-[3]" />
 
 
-      <div className="absolute top-1/3 left-1/4 w-24 h-24 border border-titanium-silver/10 rotate-45 floating-shape z-[3]" />
-      <div className="absolute bottom-1/3 right-1/4 w-16 h-16 border border-titanium-silver/10 rounded-full floating-shape z-[3]" />
-      <div className="absolute top-1/2 right-1/3 w-20 h-20 border border-titanium-silver/10 floating-shape z-[3]" />
+
 
 
       <div className="relative z-10 w-full h-full flex items-center justify-center px-4 sm:px-6 lg:px-12">
         {/* Left Side - Aadhi SVG - Hidden on mobile */}
         <div className="hero-badge absolute left-0 top-1/2 -translate-y-1/2 -translate-x-20 w-auto max-w-[2000px] pl-8 hidden xl:block">
-          <img 
-            src="/aadhi.svg" 
-            alt="Aadhi" 
+          <img
+            src="/aadhi.svg"
+            alt="Aadhi"
             className="w-full h-full opacity-80"
           />
         </div>
@@ -138,17 +129,17 @@ export default function Hero() {
           </div> */}
 
           <div className="hero-title mb-4 sm:mb-6 overflow-hidden">
-            <img 
-              src="/titanium-logo1.png" 
-              alt="TITANIUM" 
+            <img
+              src="/titanium-logo1.png"
+              alt="TITANIUM"
               className="w-[280px] sm:w-[350px] md:w-[450px] lg:w-[500px] h-auto mx-auto"
             />
           </div>
 
           <p className="hero-tagline text-base sm:text-lg md:text-xl lg:text-2xl text-titanium-light/80 max-w-xs sm:max-w-md md:max-w-xl lg:max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 font-light px-2">
-           International Level Technical Symposium
+            International Level Technical Symposium
           </p>
-          
+
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
             <div className="hero-badge flex items-center justify-center gap-2 text-titanium-metallic">
