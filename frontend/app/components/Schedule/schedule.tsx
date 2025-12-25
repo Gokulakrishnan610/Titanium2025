@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MapPin, Clock } from "lucide-react";
@@ -53,7 +53,15 @@ type DayKey = keyof typeof scheduleData;
 
 export default function Schedule() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<SVGLineElement>(null);
   const [activeDay, setActiveDay] = useState<DayKey>("Day 1");
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -95,6 +103,41 @@ export default function Schedule() {
   }, []);
 
   useEffect(() => {
+    if (!isMounted || !lineRef.current || !containerRef.current) return;
+
+    const height = containerRef.current.offsetHeight;
+    const lineLength = height * 0.85;
+
+    ScrollTrigger.getAll().forEach(st => {
+      if (st.vars.trigger === containerRef.current) {
+        st.kill();
+      }
+    });
+
+    gsap.set(lineRef.current, {
+      strokeDasharray: lineLength,
+      strokeDashoffset: lineLength
+    });
+
+    const tween = gsap.to(lineRef.current, {
+      strokeDashoffset: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 60%",
+        end: "bottom 50%",
+        scrub: 0.5,
+      },
+    });
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      tween.kill();
+    };
+  }, [isMounted, activeDay]);
+
+  useEffect(() => {
     gsap.fromTo(
       ".timeline-item",
       { opacity: 0, x: -30 },
@@ -130,7 +173,7 @@ export default function Schedule() {
       <div className="absolute inset-0 grid-pattern opacity-30" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-titanium-silver/20 to-transparent" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 w-full px-4 lg:px-8">
         <div className="schedule-header text-center mb-16">
           <span className="inline-block text-sm font-mono text-titanium-metallic uppercase tracking-widest mb-4">
             Plan Your Experience
@@ -144,77 +187,113 @@ export default function Schedule() {
           </p>
         </div>
 
-        <div className="flex justify-center gap-2 mb-12">
-          {(Object.keys(scheduleData) as DayKey[]).map((day) => (
-            <button
-              key={day}
-              onClick={() => setActiveDay(day)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                activeDay === day
-                  ? "bg-titanium-silver text-titanium-black"
-                  : "bg-titanium-charcoal text-titanium-metallic hover:bg-titanium-dark hover:text-titanium-white"
-              }`}
-            >
-              <span className="block">{day}</span>
-              <span className="text-xs opacity-70">{scheduleData[day].date}</span>
-            </button>
-          ))}
-        </div>
+        <div className="relative">
 
-        <div className="timeline-container relative">
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-titanium-silver/50 via-titanium-silver/30 to-transparent" />
-          <div className="space-y-6">
-            {scheduleData[activeDay].events.map((event, index) => (
-              <div
-                key={`${activeDay}-${index}`}
-                className={`timeline-item relative flex gap-6 md:gap-12 ${
-                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
+          <div ref={containerRef} className="timeline-container relative w-full max-w-4xl mx-auto">
+            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-6 -translate-x-1/2 h-full z-20 pointer-events-none">
+              <svg
+                className="w-full h-full overflow-visible"
+                preserveAspectRatio="none"
               >
-                <div className="absolute left-6 md:left-1/2 w-3 h-3 rounded-full bg-titanium-silver border-4 border-titanium-black transform -translate-x-1/2 mt-6" />
-
+                <line
+                  ref={lineRef}
+                  x1="50%"
+                  y1="0"
+                  x2="50%"
+                  y2="85%"
+                  stroke="white"
+                  strokeOpacity="0.8"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  style={{ strokeDasharray: 2000, strokeDashoffset: 2000 }}
+                />
+              </svg>
+            </div>
+            <div className="space-y-6 pb-16">
+              {scheduleData[activeDay].events.map((event, index) => (
                 <div
-                  className={`ml-12 md:ml-0 md:w-[calc(50%-3rem)] titanium-card rounded-xl p-5 ${
-                    index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
-                  }`}
+                  key={`${activeDay}-${index}`}
+                  className={`timeline-item relative flex gap-6 md:gap-12 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    }`}
                 >
+                  <div className="absolute left-6 md:left-1/2 w-3 h-3 rounded-full bg-titanium-silver border-4 border-titanium-black transform -translate-x-1/2 mt-6 z-30" />
 
-                  <div className="flex items-center gap-2 text-titanium-silver text-sm font-mono mb-2">
-                    <Clock size={14} />
-                    {event.time}
-                  </div>
-
-                  <h3 className="text-lg font-semibold text-titanium-white mb-2">
-                    {event.title}
-                  </h3>
-
-
-                  <div className="flex items-center gap-2 text-titanium-metallic text-sm mb-3">
-                    <MapPin size={14} />
-                    {event.location}
-                  </div>
-
-                  <span
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getTypeStyles(
-                      event.type
-                    )}`}
+                  <div
+                    className={`ml-12 md:ml-0 md:w-[calc(50%-3rem)] titanium-card rounded-xl p-5 ${index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
+                      }`}
                   >
-                    {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                  </span>
+
+                    <div className="flex items-center gap-2 text-titanium-silver text-sm font-mono mb-2">
+                      <Clock size={14} />
+                      {event.time}
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-titanium-white mb-2">
+                      {event.title}
+                    </h3>
+
+
+                    <div className="flex items-center gap-2 text-titanium-metallic text-sm mb-3">
+                      <MapPin size={14} />
+                      {event.location}
+                    </div>
+
+                    <span
+                      className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getTypeStyles(
+                        event.type
+                      )}`}
+                    >
+                      {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                    </span>
+                  </div>
                 </div>
+              ))}
+            </div>
+
+            <div className="flex justify-center w-full mt-12 mb-8 lg:hidden">
+              <div className="flex flex-row gap-3">
+                {(Object.keys(scheduleData) as DayKey[]).map((day) => (
+                  <button
+                    key={day}
+                    onClick={() => setActiveDay(day)}
+                    className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 border ${activeDay === day
+                      ? "bg-titanium-silver text-titanium-black border-titanium-silver shadow-lg shadow-titanium-silver/10"
+                      : "bg-titanium-charcoal/50 text-titanium-metallic border-titanium-silver/10 hover:bg-titanium-charcoal hover:text-titanium-white hover:border-titanium-silver/30"
+                      }`}
+                  >
+                    {day}
+                  </button>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div className="text-center mt-8">
+              <a
+                href="#"
+                className="btn-secondary px-8 py-4 rounded-full text-base font-semibold inline-block"
+              >
+                Download Full Schedule
+              </a>
+            </div>
           </div>
-        </div>
+          <div className="hidden lg:flex lg:absolute lg:right-0 lg:top-0 lg:w-auto lg:justify-end">
+            <div className="flex flex-col gap-3 w-48 sticky top-32 z-30">
+              {(Object.keys(scheduleData) as DayKey[]).map((day) => (
+                <button
+                  key={day}
+                  onClick={() => setActiveDay(day)}
+                  className={`flex flex-col items-start px-6 py-4 rounded-2xl transition-all duration-300 border ${activeDay === day
+                    ? "bg-titanium-silver text-titanium-black border-titanium-silver shadow-lg shadow-titanium-silver/10"
+                    : "bg-titanium-charcoal/50 text-titanium-metallic border-titanium-silver/10 hover:bg-titanium-charcoal hover:text-titanium-white hover:border-titanium-silver/30"
+                    }`}
+                >
+                  <span className="text-lg font-bold">{day}</span>
+                  <span className={`text-xs ${activeDay === day ? "opacity-80" : "opacity-50"}`}>{scheduleData[day].date}</span>
+                </button>
+              ))}
+            </div>
+          </div>
 
-
-        <div className="text-center mt-16">
-          <a
-            href="#"
-            className="btn-secondary px-8 py-4 rounded-full text-base font-semibold inline-block"
-          >
-            Download Full Schedule
-          </a>
         </div>
       </div>
 
