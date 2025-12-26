@@ -1,0 +1,768 @@
+.countdownWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.timeLabels {
+    display: flex;
+    justify-content: space-around;
+    width: 37.5em;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.15em;
+    margin-top: -2.2rem;
+    gap: 18%;
+    transform: perspective(800px) rotateX(15deg);
+    transform-origin: center top;
+}
+
+.container,
+.surface,
+.block,
+.blockOuter,
+.blockInner {
+    transform-style: preserve-3d;
+}
+
+.container,
+.block {
+    position: absolute;
+}
+
+.container {
+    display: flex;
+    margin: auto;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 37.5em;
+    height: 10em;
+    perspective: 800px;
+    position: relative;
+}
+
+.surface {
+    display: block;
+    width: 35em;
+    height: 1em;
+    margin: auto;
+    transform: translateY(2.5em) rotateX(105deg) rotateZ(0deg);
+    will-change: transform;
+}
+
+.block {
+    bottom: 0;
+}
+
+.blockInner div {
+    background-color: #74d447;
+}
+
+.blockInner>div {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    position: absolute;
+    width: 1em;
+    height: 1em;
+}
+
+.blockInner>div.top::before,
+.blockInner>div.bottom::before,
+.blockInner>div.left::before,
+.blockInner>div.right::before {
+    background-color: #000;
+    content: "";
+    width: 100%;
+    height: 100%;
+}
+
+.blockInner>div.top::before,
+.blockInner>div.bottom::before {
+    opacity: 0.2;
+}
+
+.blockInner>div.left::before,
+.blockInner>div.right::before {
+    opacity: 0.4;
+}
+
+.blockOuter,
+.blockInner {
+    position: relative;
+    width: 1em;
+}
+
+.blockOuter {
+    transition: transform 0.3s;
+}
+
+.blockInner {
+    transform: rotateX(-90deg) translateZ(1em);
+}
+
+.back {
+    transform: translateZ(-1em) rotateY(180deg);
+}
+
+.left {
+    transform-origin: center left;
+    transform: rotateY(270deg) translateX(-1em);
+}
+
+.right {
+    transform-origin: top right;
+}
+
+.top,
+.bottom {
+    transform-origin: top center;
+}
+
+/* Block inner dimensions */
+.block .blockInner div.top,
+.block .blockInner div.bottom {
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.block .blockInner div.top {
+    transform: rotateX(-90deg) translateY(0.2em);
+}
+
+.block .blockInner div.bottom {
+    transform: rotateX(-90deg) translateY(0.2em) translateZ(0.8em);
+}
+
+.block .blockInner div.front,
+.block .blockInner div.back {
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.block .blockInner div.front {
+    transform: translateZ(-0.2em);
+}
+
+.block .blockInner div.left,
+.block .blockInner div.right {
+    width: 0.8em;
+    height: 0.8em;
+}
+
+.block .blockInner div.right {
+    transform: rotateY(-270deg) translate3d(1em, 0, 0em);
+}
+
+/* ==================== DIGIT 1 - Days Tens (blocks 1-15) ==================== */
+.b1 {
+    transform: translate3d(0.1em, -0.9em, 4.9em);
+}
+
+.b2 {
+    transform: translate3d(1.1em, -0.9em, 4.9em);
+}
+
+.b3 {
+    transform: translate3d(2.1em, -0.9em, 4.9em);
+}
+
+.b4 {
+    transform: translate3d(0.1em, -0.9em, 3.9em);
+}
+
+.b5 {
+    transform: translate3d(1.1em, -0.9em, 3.9em);
+}
+
+.b6 {
+    transform: translate3d(2.1em, -0.9em, 3.9em);
+}
+
+.b7 {
+    transform: translate3d(0.1em, -0.9em, 2.9em);
+}
+
+.b8 {
+    transform: translate3d(1.1em, -0.9em, 2.9em);
+}
+
+.b9 {
+    transform: translate3d(2.1em, -0.9em, 2.9em);
+}
+
+.b10 {
+    transform: translate3d(0.1em, -0.9em, 1.9em);
+}
+
+.b11 {
+    transform: translate3d(1.1em, -0.9em, 1.9em);
+}
+
+.b12 {
+    transform: translate3d(2.1em, -0.9em, 1.9em);
+}
+
+.b13 {
+    transform: translate3d(0.1em, -0.9em, 0.9em);
+}
+
+.b14 {
+    transform: translate3d(1.1em, -0.9em, 0.9em);
+}
+
+.b15 {
+    transform: translate3d(2.1em, -0.9em, 0.9em);
+}
+
+/* ==================== DIGIT 2 - Days Units (blocks 16-30) - 0.5em gap ==================== */
+.b16 {
+    transform: translate3d(3.6em, -0.9em, 4.9em);
+}
+
+.b17 {
+    transform: translate3d(4.6em, -0.9em, 4.9em);
+}
+
+.b18 {
+    transform: translate3d(5.6em, -0.9em, 4.9em);
+}
+
+.b19 {
+    transform: translate3d(3.6em, -0.9em, 3.9em);
+}
+
+.b20 {
+    transform: translate3d(4.6em, -0.9em, 3.9em);
+}
+
+.b21 {
+    transform: translate3d(5.6em, -0.9em, 3.9em);
+}
+
+.b22 {
+    transform: translate3d(3.6em, -0.9em, 2.9em);
+}
+
+.b23 {
+    transform: translate3d(4.6em, -0.9em, 2.9em);
+}
+
+.b24 {
+    transform: translate3d(5.6em, -0.9em, 2.9em);
+}
+
+.b25 {
+    transform: translate3d(3.6em, -0.9em, 1.9em);
+}
+
+.b26 {
+    transform: translate3d(4.6em, -0.9em, 1.9em);
+}
+
+.b27 {
+    transform: translate3d(5.6em, -0.9em, 1.9em);
+}
+
+.b28 {
+    transform: translate3d(3.6em, -0.9em, 0.9em);
+}
+
+.b29 {
+    transform: translate3d(4.6em, -0.9em, 0.9em);
+}
+
+.b30 {
+    transform: translate3d(5.6em, -0.9em, 0.9em);
+}
+
+/* Separator 1 (blocks 31-32) */
+.b31 {
+    transform: translate3d(7.4em, -0.9em, 3.9em);
+}
+
+.b32 {
+    transform: translate3d(7.4em, -0.9em, 1.9em);
+}
+
+/* ==================== DIGIT 3 - Hours Tens (blocks 33-47) ==================== */
+.b33 {
+    transform: translate3d(9.2em, -0.9em, 4.9em);
+}
+
+.b34 {
+    transform: translate3d(10.2em, -0.9em, 4.9em);
+}
+
+.b35 {
+    transform: translate3d(11.2em, -0.9em, 4.9em);
+}
+
+.b36 {
+    transform: translate3d(9.2em, -0.9em, 3.9em);
+}
+
+.b37 {
+    transform: translate3d(10.2em, -0.9em, 3.9em);
+}
+
+.b38 {
+    transform: translate3d(11.2em, -0.9em, 3.9em);
+}
+
+.b39 {
+    transform: translate3d(9.2em, -0.9em, 2.9em);
+}
+
+.b40 {
+    transform: translate3d(10.2em, -0.9em, 2.9em);
+}
+
+.b41 {
+    transform: translate3d(11.2em, -0.9em, 2.9em);
+}
+
+.b42 {
+    transform: translate3d(9.2em, -0.9em, 1.9em);
+}
+
+.b43 {
+    transform: translate3d(10.2em, -0.9em, 1.9em);
+}
+
+.b44 {
+    transform: translate3d(11.2em, -0.9em, 1.9em);
+}
+
+.b45 {
+    transform: translate3d(9.2em, -0.9em, 0.9em);
+}
+
+.b46 {
+    transform: translate3d(10.2em, -0.9em, 0.9em);
+}
+
+.b47 {
+    transform: translate3d(11.2em, -0.9em, 0.9em);
+}
+
+/* ==================== DIGIT 4 - Hours Units (blocks 48-62) - 0.5em gap ==================== */
+.b48 {
+    transform: translate3d(12.7em, -0.9em, 4.9em);
+}
+
+.b49 {
+    transform: translate3d(13.7em, -0.9em, 4.9em);
+}
+
+.b50 {
+    transform: translate3d(14.7em, -0.9em, 4.9em);
+}
+
+.b51 {
+    transform: translate3d(12.7em, -0.9em, 3.9em);
+}
+
+.b52 {
+    transform: translate3d(13.7em, -0.9em, 3.9em);
+}
+
+.b53 {
+    transform: translate3d(14.7em, -0.9em, 3.9em);
+}
+
+.b54 {
+    transform: translate3d(12.7em, -0.9em, 2.9em);
+}
+
+.b55 {
+    transform: translate3d(13.7em, -0.9em, 2.9em);
+}
+
+.b56 {
+    transform: translate3d(14.7em, -0.9em, 2.9em);
+}
+
+.b57 {
+    transform: translate3d(12.7em, -0.9em, 1.9em);
+}
+
+.b58 {
+    transform: translate3d(13.7em, -0.9em, 1.9em);
+}
+
+.b59 {
+    transform: translate3d(14.7em, -0.9em, 1.9em);
+}
+
+.b60 {
+    transform: translate3d(12.7em, -0.9em, 0.9em);
+}
+
+.b61 {
+    transform: translate3d(13.7em, -0.9em, 0.9em);
+}
+
+.b62 {
+    transform: translate3d(14.7em, -0.9em, 0.9em);
+}
+
+/* Separator 2 (blocks 63-64) */
+.b63 {
+    transform: translate3d(16.5em, -0.9em, 3.9em);
+}
+
+.b64 {
+    transform: translate3d(16.5em, -0.9em, 1.9em);
+}
+
+/* ==================== DIGIT 5 - Minutes Tens (blocks 65-79) ==================== */
+.b65 {
+    transform: translate3d(18.3em, -0.9em, 4.9em);
+}
+
+.b66 {
+    transform: translate3d(19.3em, -0.9em, 4.9em);
+}
+
+.b67 {
+    transform: translate3d(20.3em, -0.9em, 4.9em);
+}
+
+.b68 {
+    transform: translate3d(18.3em, -0.9em, 3.9em);
+}
+
+.b69 {
+    transform: translate3d(19.3em, -0.9em, 3.9em);
+}
+
+.b70 {
+    transform: translate3d(20.3em, -0.9em, 3.9em);
+}
+
+.b71 {
+    transform: translate3d(18.3em, -0.9em, 2.9em);
+}
+
+.b72 {
+    transform: translate3d(19.3em, -0.9em, 2.9em);
+}
+
+.b73 {
+    transform: translate3d(20.3em, -0.9em, 2.9em);
+}
+
+.b74 {
+    transform: translate3d(18.3em, -0.9em, 1.9em);
+}
+
+.b75 {
+    transform: translate3d(19.3em, -0.9em, 1.9em);
+}
+
+.b76 {
+    transform: translate3d(20.3em, -0.9em, 1.9em);
+}
+
+.b77 {
+    transform: translate3d(18.3em, -0.9em, 0.9em);
+}
+
+.b78 {
+    transform: translate3d(19.3em, -0.9em, 0.9em);
+}
+
+.b79 {
+    transform: translate3d(20.3em, -0.9em, 0.9em);
+}
+
+/* ==================== DIGIT 6 - Minutes Units (blocks 80-94) - 0.5em gap ==================== */
+.b80 {
+    transform: translate3d(21.8em, -0.9em, 4.9em);
+}
+
+.b81 {
+    transform: translate3d(22.8em, -0.9em, 4.9em);
+}
+
+.b82 {
+    transform: translate3d(23.8em, -0.9em, 4.9em);
+}
+
+.b83 {
+    transform: translate3d(21.8em, -0.9em, 3.9em);
+}
+
+.b84 {
+    transform: translate3d(22.8em, -0.9em, 3.9em);
+}
+
+.b85 {
+    transform: translate3d(23.8em, -0.9em, 3.9em);
+}
+
+.b86 {
+    transform: translate3d(21.8em, -0.9em, 2.9em);
+}
+
+.b87 {
+    transform: translate3d(22.8em, -0.9em, 2.9em);
+}
+
+.b88 {
+    transform: translate3d(23.8em, -0.9em, 2.9em);
+}
+
+.b89 {
+    transform: translate3d(21.8em, -0.9em, 1.9em);
+}
+
+.b90 {
+    transform: translate3d(22.8em, -0.9em, 1.9em);
+}
+
+.b91 {
+    transform: translate3d(23.8em, -0.9em, 1.9em);
+}
+
+.b92 {
+    transform: translate3d(21.8em, -0.9em, 0.9em);
+}
+
+.b93 {
+    transform: translate3d(22.8em, -0.9em, 0.9em);
+}
+
+.b94 {
+    transform: translate3d(23.8em, -0.9em, 0.9em);
+}
+
+/* Separator 3 (blocks 95-96) */
+.b95 {
+    transform: translate3d(25.6em, -0.9em, 3.9em);
+}
+
+.b96 {
+    transform: translate3d(25.6em, -0.9em, 1.9em);
+}
+
+/* ==================== DIGIT 7 - Seconds Tens (blocks 97-111) ==================== */
+.b97 {
+    transform: translate3d(27.4em, -0.9em, 4.9em);
+}
+
+.b98 {
+    transform: translate3d(28.4em, -0.9em, 4.9em);
+}
+
+.b99 {
+    transform: translate3d(29.4em, -0.9em, 4.9em);
+}
+
+.b100 {
+    transform: translate3d(27.4em, -0.9em, 3.9em);
+}
+
+.b101 {
+    transform: translate3d(28.4em, -0.9em, 3.9em);
+}
+
+.b102 {
+    transform: translate3d(29.4em, -0.9em, 3.9em);
+}
+
+.b103 {
+    transform: translate3d(27.4em, -0.9em, 2.9em);
+}
+
+.b104 {
+    transform: translate3d(28.4em, -0.9em, 2.9em);
+}
+
+.b105 {
+    transform: translate3d(29.4em, -0.9em, 2.9em);
+}
+
+.b106 {
+    transform: translate3d(27.4em, -0.9em, 1.9em);
+}
+
+.b107 {
+    transform: translate3d(28.4em, -0.9em, 1.9em);
+}
+
+.b108 {
+    transform: translate3d(29.4em, -0.9em, 1.9em);
+}
+
+.b109 {
+    transform: translate3d(27.4em, -0.9em, 0.9em);
+}
+
+.b110 {
+    transform: translate3d(28.4em, -0.9em, 0.9em);
+}
+
+.b111 {
+    transform: translate3d(29.4em, -0.9em, 0.9em);
+}
+
+/* ==================== DIGIT 8 - Seconds Units (blocks 112-126) - 0.5em gap ==================== */
+.b112 {
+    transform: translate3d(30.9em, -0.9em, 4.9em);
+}
+
+.b113 {
+    transform: translate3d(31.9em, -0.9em, 4.9em);
+}
+
+.b114 {
+    transform: translate3d(32.9em, -0.9em, 4.9em);
+}
+
+.b115 {
+    transform: translate3d(30.9em, -0.9em, 3.9em);
+}
+
+.b116 {
+    transform: translate3d(31.9em, -0.9em, 3.9em);
+}
+
+.b117 {
+    transform: translate3d(32.9em, -0.9em, 3.9em);
+}
+
+.b118 {
+    transform: translate3d(30.9em, -0.9em, 2.9em);
+}
+
+.b119 {
+    transform: translate3d(31.9em, -0.9em, 2.9em);
+}
+
+.b120 {
+    transform: translate3d(32.9em, -0.9em, 2.9em);
+}
+
+.b121 {
+    transform: translate3d(30.9em, -0.9em, 1.9em);
+}
+
+.b122 {
+    transform: translate3d(31.9em, -0.9em, 1.9em);
+}
+
+.b123 {
+    transform: translate3d(32.9em, -0.9em, 1.9em);
+}
+
+.b124 {
+    transform: translate3d(30.9em, -0.9em, 0.9em);
+}
+
+.b125 {
+    transform: translate3d(31.9em, -0.9em, 0.9em);
+}
+
+.b126 {
+    transform: translate3d(32.9em, -0.9em, 0.9em);
+}
+
+/* Animations */
+@keyframes bounce {
+
+    from,
+    50%,
+    to {
+        transform: translateY(0);
+    }
+
+    25%,
+    75% {
+        transform: translateY(10px);
+    }
+}
+
+@keyframes tilt {
+
+    from,
+    to {
+        transform: translateY(2.5em) rotateX(105deg) rotateZ(-7deg);
+    }
+
+    50% {
+        transform: translateY(2.5em) rotateX(105deg) rotateZ(7deg);
+    }
+}
+
+@media (max-width: 1200px) {
+    .countdownWrapper {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 900px) {
+    .countdownWrapper {
+        font-size: 12px;
+    }
+
+    .timeLabels {
+        font-size: 0.65rem;
+        gap: 16%;
+        margin-top: -1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .countdownWrapper {
+        font-size: 10px;
+    }
+
+    .timeLabels {
+        font-size: 0.55rem;
+        gap: 4%;
+        margin-top: -1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .countdownWrapper {
+        font-size: 8px;
+    }
+
+    .timeLabels {
+        font-size: 0.465rem;
+        gap: 0.1%;
+        margin-top: -1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdownWrapper {
+        font-size: 6px;
+    }
+
+    .timeLabels {
+        font-size: 0.45rem;
+        gap: 6%;
+        margin-top: -1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .countdownWrapper {
+        font-size: 5px;
+    }
+
+    .timeLabels {
+        font-size: 0.4rem;
+        gap: 4%;
+        margin-top: -0.8rem;
+    }
+}
