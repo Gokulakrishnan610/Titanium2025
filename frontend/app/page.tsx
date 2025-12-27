@@ -10,7 +10,7 @@ import Workshops from "./components/Workshops/workshops";
 import Schedule from "./components/Schedule/schedule";
 import Footer from "./components/Footer/footer";
 import SmoothScroll from "./components/SmoothScroll";
-import Sponsors from "./components/Sponsors/sponsors";
+// import Sponsors from "./components/Sponsors/sponsors";
 // import PlenarySessionsV2 from "./components/PlenarySessionV2/plenaryV2";
 
 export default function Home() {
@@ -27,7 +27,7 @@ export default function Home() {
       <ExperienceZone />
       <Workshops />
       <Schedule />
-      <Sponsors/>
+      {/*<Sponsors/>*/}
       <Footer />
     </SmoothScroll>
   );

@@ -22,7 +22,7 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    const targetDate = new Date("2026-02-15T09:00:00").getTime();
+    const targetDate = new Date("2026-02-12T08:00:00").getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();
@@ -144,7 +144,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-6 mb-8 sm:mb-10 md:mb-12">
             <div className="hero-badge flex items-center justify-center gap-2 text-titanium-metallic">
               <Calendar size={16} className="sm:w-[18px] sm:h-[18px]" />
-              <span className="text-xs sm:text-sm font-mono">FEBRUARY 15-17, 2026</span>
+              <span className="text-xs sm:text-sm font-mono">FEBRUARY 12-14, 2026</span>
             </div>
             <div className="hero-badge flex items-center justify-center gap-2 text-titanium-metallic">
               <MapPin size={16} className="sm:w-[18px] sm:h-[18px]" />

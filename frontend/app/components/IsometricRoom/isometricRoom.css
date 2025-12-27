@@ -88,9 +88,9 @@
 }
 
 .cuadro-r__front {
-    background-image: url("/DEVS.png");
-    background-color: #ffffff;
-    border: 0.5vw solid #ffffff;
+    background-image: url("/rec.png");
+    background-color: #0a0000;
+    border: 0.5vw solid #020000;
 }
 
 .cuadro-r__front::before {
