@@ -217,7 +217,7 @@ const ScrollMask = () => {
             <h3 ref={heroTextRef} className={styles.heroText}>
               Coming
               <br />
-              FEBRUARY
+              FEBRUARY 12
               <br />
               2026
             </h3>
