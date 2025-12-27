@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
@@ -9,121 +8,176 @@ import styles from "./plenary.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+interface Speaker {
+  name: string;
+  title: string;
+  organization: string;
+  photo?: string;
+}
+
 interface PlenarySession {
   id: string;
+  sessionNumber: number;
   sessionTitle: string;
-  day: number;
-  date: string;
-  time: string;
-  crypticHint: string;
   topic: {
     title: string;
     description: string;
     tags: string[];
   };
-  venue: string;
-  featured?: boolean;
-  achievements: string[];
+  speakers: Speaker[];
+  awaitingConfirmation: boolean;
+  isOtherSpeakers?: boolean;
 }
 
 const plenarySessionsData: PlenarySession[] = [
   {
     id: "ps1",
-    sessionTitle: "The Future of Computing",
-    day: 1,
-    date: "2025-01-20",
-    time: "10:00 AM - 11:30 AM",
-    crypticHint: "A visionary who revolutionized personal computing and global philanthropy",
+    sessionNumber: 1,
+    sessionTitle: "The Age of Artificial Intelligence",
     topic: {
-      title: "Innovation in the Age of AI",
-      description: "Exploring how artificial intelligence will reshape industries and transform society",
-      tags: ["AI", "Innovation", "Future Tech"],
+      title: "AI Revolution",
+      description: "Exploring the transformative impact of artificial intelligence on industries, society, and the future of human-machine collaboration.",
+      tags: ["AI", "Machine Learning", "Future Tech"],
     },
-    venue: "Main Seminar Hall",
-    featured: true,
-    achievements: ["Tech Pioneer", "Philanthropist", "Industry Legend"],
+    speakers: [],
+    awaitingConfirmation: true,
   },
   {
     id: "ps2",
-    sessionTitle: "The Open Source Revolution",
-    day: 2,
-    date: "2025-01-21",
-    time: "11:00 AM - 12:30 PM",
-    crypticHint: "The architect behind the kernel that powers billions of devices worldwide",
+    sessionNumber: 2,
+    sessionTitle: "Quantum, Edge & Neuromorphic Computing",
     topic: {
-      title: "Building Systems That Last Decades",
-      description: "Lessons from creating and maintaining the world's most important operating system",
-      tags: ["Open Source", "Linux", "System Design"],
+      title: "Next-Gen Computing",
+      description: "Diving into the cutting-edge world of quantum computing, edge architectures, and brain-inspired neuromorphic systems.",
+      tags: ["Quantum", "Edge Computing", "Neuromorphic"],
     },
-    venue: "A304",
-    featured: true,
-    achievements: ["OS Creator", "Open Source Legend", "Software Architect"],
+    speakers: [],
+    awaitingConfirmation: true,
   },
   {
     id: "ps3",
-    sessionTitle: "Entrepreneurship & Innovation",
-    day: 3,
-    date: "2025-01-22",
-    time: "09:30 AM - 11:00 AM",
-    crypticHint: "A serial entrepreneur pushing humanity toward a multi-planetary future",
+    sessionNumber: 3,
+    sessionTitle: "Future of Mobility & Sustainable Energy",
     topic: {
-      title: "Building Tomorrow's Technology",
-      description: "From electric vehicles to space exploration - reimagining what's possible",
-      tags: ["Space Tech", "Innovation", "Sustainability"],
+      title: "Sustainable Mobility",
+      description: "Exploring innovations in electric vehicles, sustainable transportation, and the future of clean energy solutions.",
+      tags: ["EV", "Sustainability", "Green Energy"],
     },
-    venue: "Purple Hall",
-    featured: true,
-    achievements: ["Space Pioneer", "Tech Innovator", "Visionary CEO"],
+    speakers: [
+      {
+        name: "Dr. Shankar Venugopal",
+        title: "Vice-President",
+        organization: "Mahindra & Mahindra",
+      },
+      {
+        name: "Dr. Nagesh Poojari",
+        title: "Managing Director",
+        organization: "IPG Automotive India",
+      },
+      {
+        name: "Mr. Paresh Patel",
+        title: "Founder & CEO",
+        organization: "Verde Mobility, India",
+      },
+      {
+        name: "Dinesh Arjun",
+        title: "CEO and Co-Founder",
+        organization: "Raptee",
+      },
+    ],
+    awaitingConfirmation: false,
   },
   {
     id: "ps4",
-    sessionTitle: "AI Ethics & Society",
-    day: 4,
-    date: "2025-01-23",
-    time: "02:00 PM - 03:30 PM",
-    crypticHint: "Leading one of the world's most influential tech companies into the AI era",
+    sessionNumber: 4,
+    sessionTitle: "SpaceTech & Frontier Engineering",
     topic: {
-      title: "Responsible AI Development",
-      description: "Balancing technological innovation with ethical considerations and societal impact",
-      tags: ["AI Ethics", "Technology", "Society"],
+      title: "Space Exploration",
+      description: "Pushing the boundaries of aerospace engineering, satellite technology, and humanity's reach into the cosmos.",
+      tags: ["SpaceTech", "Aerospace", "Propulsion"],
     },
-    venue: "Auditorium",
-    featured: false,
-    achievements: ["Tech CEO", "AI Pioneer", "Industry Leader"],
+    speakers: [
+      {
+        name: "Professor Suresh Sampath",
+        title: "Head of Gas Turbine Systems Engineering & Operations, Director-CPD Propulsion Engineering",
+        organization: "Cranfield University, United Kingdom",
+      },
+    ],
+    awaitingConfirmation: false,
   },
   {
     id: "ps5",
-    sessionTitle: "The Quantum Leap",
-    day: 5,
-    date: "2025-01-24",
-    time: "10:30 AM - 12:00 PM",
-    crypticHint: "Transforming enterprise technology through cloud innovation and AI integration",
+    sessionNumber: 5,
+    sessionTitle: "Bio-Digital Convergence & Human Augmentation",
     topic: {
-      title: "Cloud Computing & Quantum Integration",
-      description: "How quantum computing will revolutionize cloud infrastructure and business solutions",
-      tags: ["Quantum", "Cloud", "Future Computing"],
+      title: "Biomedical Innovation",
+      description: "The intersection of biology and technology - from biomedical engineering to human augmentation and digital health.",
+      tags: ["Biomedical", "HealthTech", "Augmentation"],
     },
-    venue: "Tech Lounge",
-    featured: false,
-    achievements: ["Cloud Architect", "Tech Transformer", "Business Leader"],
+    speakers: [
+      {
+        name: "Suresh M.L. Raghavan",
+        title: "Associate Dean for Graduate Education, Professor",
+        organization: "Roy J. Carver Dept. of Biomedical Engineering, The University of Iowa",
+      },
+      {
+        name: "Dr. Murugan",
+        title: "Chief Scientist/GM - Diagnostics Micro Biology Division",
+        organization: "mFINE, Chennai",
+      },
+      {
+        name: "Bruce K Gale",
+        title: "Chair and Merit Medical Systems Inc. Endowed Engineering Professor",
+        organization: "The University of Utah, Dept. of Mechanical Engineering",
+      },
+      {
+        name: "Mr. Piyush Padmanabhan",
+        title: "Co-Founder and CEO",
+        organization: "Next Big Innovations Labs (NBIL), Bengaluru",
+      },
+    ],
+    awaitingConfirmation: false,
   },
   {
     id: "ps6",
-    sessionTitle: "Security & Privacy",
-    day: 6,
-    date: "2025-01-25",
-    time: "03:00 PM - 04:30 PM",
-    crypticHint: "A champion of user privacy and security in the modern digital landscape",
+    sessionNumber: 6,
+    sessionTitle: "Climate Tech, Smart Cities & Circular Economy",
     topic: {
-      title: "Privacy as a Fundamental Right",
-      description: "Building secure systems that protect user privacy in an interconnected world",
-      tags: ["Security", "Privacy", "User Trust"],
+      title: "Climate Innovation",
+      description: "Building sustainable cities of tomorrow through climate technology, smart infrastructure, and circular economy principles.",
+      tags: ["ClimateTech", "Smart Cities", "Circular Economy"],
     },
-    venue: "D103",
-    featured: false,
-    achievements: ["Privacy Advocate", "Security Expert", "Tech Leader"],
+    speakers: [],
+    awaitingConfirmation: true,
+  },
+  {
+    id: "other",
+    sessionNumber: 0,
+    sessionTitle: "Other Distinguished Speakers",
+    topic: {
+      title: "Special Guests",
+      description: "Distinguished academics and industry leaders joining Titanium 2025 to share their expertise and insights.",
+      tags: ["Academia", "Industry", "Leadership"],
+    },
+    speakers: [
+      {
+        name: "Dr. Krishnaswami (Hari) Srihari",
+        title: "Dean Emeritus, SUNY Distinguished Professor",
+        organization: "Thomas J. Watson College of Engineering, Binghamton University, New York",
+      },
+    ],
+    awaitingConfirmation: false,
+    isOtherSpeakers: true,
   },
 ];
+
+function getInitials(name: string): string {
+  const words = name.replace(/^(Dr\.|Mr\.|Ms\.|Prof\.|Professor)\s*/i, "").split(" ");
+  if (words.length >= 2) {
+    return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+  }
+  return words[0].substring(0, 2).toUpperCase();
+}
 
 interface PlenarySessionsProps {
   sessions?: PlenarySession[];
@@ -220,24 +274,29 @@ export default function PlenarySessions({
                 {isMobile ? (
                   <div className="relative flex flex-col justify-between w-full h-full min-h-[300px] p-4 gap-0 overflow-hidden">
                     <div className="absolute top-4 right-4 z-10">
-                      <div className={styles.dayBadge}>
-                        <span className="text-xs font-bold">DAY</span>
-                        <span className="text-2xl font-bold">{session.day}</span>
-                      </div>
+                      {session.isOtherSpeakers ? (
+                        <div className={cn(styles.dayBadge, styles.otherBadge)}>
+                          <span className="text-xs font-bold">SPECIAL</span>
+                          <span className="text-lg font-bold">✦</span>
+                        </div>
+                      ) : (
+                        <div className={styles.dayBadge}>
+                          <span className="text-xs font-bold">DAY</span>
+                          <span className="text-2xl font-bold">{session.sessionNumber}</span>
+                        </div>
+                      )}
                     </div>
                     <div className="flex flex-col flex-1 justify-start min-h-0 mt-2">
-                      <h3 className="text-lg font-bold text-titanium-light leading-tight mt-2 mb-3 truncate">
+                      <h3 className="text-lg font-bold text-titanium-light leading-tight mt-2 mb-3 pr-16">
                         {session.sessionTitle}
                       </h3>
-                      <p className="text-sm text-titanium-metallic mb-2 truncate">
-                        {new Date(session.date).toLocaleDateString("en-US", {
-                          weekday: "short",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </p>
-                      <span className="text-titanium-silver/60 text-sm block mb-2 truncate">{session.time}</span>
-                      <span className="text-titanium-silver font-medium text-sm block mb-3 truncate">{session.venue}</span>
+                      {session.awaitingConfirmation ? (
+                        <span className={styles.revealingBadge}>Revealing Soon</span>
+                      ) : (
+                        <p className="text-sm text-titanium-metallic mb-2">
+                          {session.speakers.length} Speaker{session.speakers.length !== 1 ? 's' : ''}
+                        </p>
+                      )}
                       <button
                         onClick={() => setSelectedSession(session)}
                         className="mt-2 px-4 py-2 bg-titanium-silver/10 border border-titanium-silver/30 rounded-lg text-titanium-silver hover:bg-titanium-silver/20 transition-colors w-fit"
@@ -245,16 +304,17 @@ export default function PlenarySessions({
                         Know More
                       </button>
                     </div>
-                    <div className="absolute" style={{ bottom: '1.6rem', right: '0.3rem' }}>
-                      <Image
-                        src="/personMask.png"
-                        alt="Mystery Speaker Mask"
-                        className={cn(styles.mysteryMaskMobile, 'drop-shadow-lg')}
-                        width={80}
-                        height={80}
-                        draggable={false}
-                        priority
-                      />
+                    <div className="absolute bottom-4 right-4 flex -space-x-2">
+                      {session.speakers.slice(0, 3).map((speaker, idx) => (
+                        <div key={idx} className={styles.miniAvatar}>
+                          <span className={styles.miniInitials}>{getInitials(speaker.name)}</span>
+                        </div>
+                      ))}
+                      {session.speakers.length > 3 && (
+                        <div className={cn(styles.miniAvatar, styles.miniAvatarMore)}>
+                          <span className={styles.miniInitials}>+{session.speakers.length - 3}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -265,20 +325,26 @@ export default function PlenarySessions({
                           <h3 className="text-xl font-bold text-titanium-light leading-tight mt-2">
                             {session.sessionTitle}
                           </h3>
-                          <p className="text-xs text-titanium-metallic mt-1">
-                            {new Date(session.date).toLocaleDateString("en-US", {
-                              weekday: "short",
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </p>
-                          <span className="text-titanium-silver/60 block mt-1">{session.time}</span>
+                          {session.awaitingConfirmation ? (
+                            <span className={cn(styles.revealingBadge, "mt-2 inline-block")}>Revealing Soon</span>
+                          ) : (
+                            <p className="text-xs text-titanium-metallic mt-1">
+                              {session.speakers.length} Speaker{session.speakers.length !== 1 ? 's' : ''}
+                            </p>
+                          )}
                         </div>
                         <div className="self-start">
-                          <div className={styles.dayBadge}>
-                            <span className="text-xs font-bold">DAY</span>
-                            <span className="text-2xl font-bold">{session.day}</span>
-                          </div>
+                          {session.isOtherSpeakers ? (
+                            <div className={cn(styles.dayBadge, styles.otherBadge)}>
+                              <span className="text-xs font-bold">SPECIAL</span>
+                              <span className="text-lg font-bold">✦</span>
+                            </div>
+                          ) : (
+                            <div className={styles.dayBadge}>
+                              <span className="text-xs font-bold">DAY</span>
+                              <span className="text-2xl font-bold">{session.sessionNumber}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -290,21 +356,41 @@ export default function PlenarySessions({
                       <div className={cn(
                         isMobile ? "col-span-1 flex items-center justify-center" : "col-span-5 flex items-center justify-center"
                       )}>
-                        <div className={cn(styles.humanFigureXL, isMobile && styles.humanFigureMobile)}>
-                          <div className={styles.figureGlow} />
-                          <Image
-                            src="/personMask.png"
-                            alt="Mystery Speaker Mask"
-                            className={cn(styles.mysteryMaskXL, isMobile && styles.mysteryMaskMobile, "translate-y-11.5")}
-                            width={isMobile ? 150 : 400}
-                            height={isMobile ? 150 : 400}
-                            draggable={false}
-                            priority
-                          />
-                          <div className={styles.mysteryLabel}>MYSTERY SPEAKER</div>
-                        </div>
+                        {session.awaitingConfirmation ? (
+                          <div className={styles.awaitingContainer}>
+                            <div className={styles.awaitingIcon}>
+                              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 6v6l4 2" />
+                              </svg>
+                            </div>
+                            <p className={styles.awaitingText}>Revealing Soon</p>
+                          </div>
+                        ) : (
+                          <div className={cn(
+                            styles.speakersGrid,
+                            session.speakers.length === 1 && styles.singleSpeaker,
+                            session.speakers.length === 2 && styles.twoSpeakers,
+                            session.speakers.length >= 3 && styles.multiSpeakers
+                          )}>
+                            {session.speakers.map((speaker, idx) => (
+                              <div key={idx} className={styles.speakerCard}>
+                                <div className={styles.speakerAvatar}>
+                                  {speaker.photo ? (
+                                    <img src={speaker.photo} alt={speaker.name} className={styles.speakerPhoto} />
+                                  ) : (
+                                    <span className={styles.speakerInitials}>{getInitials(speaker.name)}</span>
+                                  )}
+                                </div>
+                                <div className={styles.speakerInfo}>
+                                  <h4 className={styles.speakerName}>{speaker.name}</h4>
+                                  <p className={styles.speakerOrg}>{speaker.organization}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-
                       <div className={cn(
                         isMobile ? "col-span-1 flex flex-col justify-between overflow-y-auto" : "col-span-4 flex flex-col justify-between"
                       )}>
@@ -321,44 +407,9 @@ export default function PlenarySessions({
                               {session.topic.description}
                             </p>
                           </div>
-
-                          <div className="relative">
-                            <div className="flex items-center gap-2 mb-2">
-                              <div className="h-px flex-1 bg-linear-to-r from-titanium-silver/50 to-transparent" />
-                              <span className="text-xs text-titanium-silver/70 uppercase tracking-wider">Hint</span>
-                            </div>
-                            <div className="bg-titanium-silver/5 rounded-lg p-3 md:p-3 border-l-2 border-titanium-silver/30">
-                              <p className="text-base md:text-xs text-titanium-metallic italic leading-relaxed">
-                                &quot;{session.crypticHint}&quot;
-                              </p>
-                            </div>
-                          </div>
-
-                          <div>
-                            <div className="flex items-center gap-2 mb-2">
-                              <div className="h-px flex-1 bg-linear-to-r from-titanium-silver/50 to-transparent" />
-                              <span className="text-xs text-titanium-silver/70 uppercase tracking-wider">Achievements</span>
-                            </div>
-                            <div className="flex flex-wrap gap-1.5">
-                              {session.achievements.map((achievement) => (
-                                <span
-                                  key={achievement}
-                                  className="px-2 py-0.5 rounded bg-titanium-silver/10 border border-titanium-silver/20 text-titanium-silver text-base md:text-xs"
-                                >
-                                  {achievement}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
                         </div>
 
                         <div className="mt-4 pt-3 border-t border-titanium-silver/10">
-                          <div className="flex items-center justify-between text-xs">
-                            <div className="flex items-center gap-2">
-                              <span className="text-titanium-metallic">{session.time}</span>
-                            </div>
-                            <span className="text-titanium-silver font-medium">{session.venue}</span>
-                          </div>
                           <div className="flex flex-wrap gap-1 mt-2">
                             {session.topic.tags.map((tag) => (
                               <span
@@ -389,15 +440,21 @@ export default function PlenarySessions({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobile ? "M19 14l-7 7m0 0l-7-7m7 7V3" : "M9 5l7 7-7 7"} />
         </svg>
       </div>
-
       {selectedSession && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-titanium-charcoal border border-titanium-silver/20 rounded-2xl p-6 max-w-md w-full max-h-[80vh] relative">
+          <div className="bg-titanium-charcoal border border-titanium-silver/20 rounded-2xl p-6 max-w-2xl w-full max-h-[85vh] relative overflow-hidden">
             <div className="flex justify-between items-start mb-4">
-              <div className={styles.dayBadge}>
-                <span className="text-xs font-bold">DAY</span>
-                <span className="text-2xl font-bold">{selectedSession.day}</span>
-              </div>
+              {selectedSession.isOtherSpeakers ? (
+                <div className={cn(styles.dayBadge, styles.otherBadge)}>
+                  <span className="text-xs font-bold">SPECIAL</span>
+                  <span className="text-xl font-bold">✦</span>
+                </div>
+              ) : (
+                <div className={styles.dayBadge}>
+                  <span className="text-xs font-bold">DAY</span>
+                  <span className="text-2xl font-bold">{selectedSession.sessionNumber}</span>
+                </div>
+              )}
               <button
                 onClick={() => setSelectedSession(null)}
                 className="text-titanium-silver hover:text-titanium-light"
@@ -410,57 +467,46 @@ export default function PlenarySessions({
             <h3 className="text-xl font-bold text-titanium-light leading-tight mb-2">
               {selectedSession.sessionTitle}
             </h3>
-            <p className="text-sm text-titanium-metallic mb-1">
-              {new Date(selectedSession.date).toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </p>
-            <span className="text-titanium-silver/60 text-sm block mb-4">{selectedSession.time} • {selectedSession.venue}</span>
-            <div className="space-y-4 pb-16 overflow-y-auto max-h-[60vh]">
+
+            <div className="space-y-4 pb-4 overflow-y-auto max-h-[65vh]">
               <div>
                 <h4 className="text-lg font-bold text-titanium-bright mb-1">Topic</h4>
                 <p className="text-sm text-titanium-metallic leading-relaxed">{selectedSession.topic.title}</p>
                 <p className="text-sm text-titanium-metallic leading-relaxed mt-2">{selectedSession.topic.description}</p>
               </div>
+
               <div>
-                <h4 className="text-lg font-bold text-titanium-bright mb-1">Cryptic Hint</h4>
-                <p className="text-sm text-titanium-metallic italic">"{selectedSession.crypticHint}"</p>
+                <h4 className="text-lg font-bold text-titanium-bright mb-3">
+                  {selectedSession.awaitingConfirmation ? "Speakers" : `Speakers (${selectedSession.speakers.length})`}
+                </h4>
+                {selectedSession.awaitingConfirmation ? (
+                  <p className={styles.revealingBadge}>Revealing Soon</p>
+                ) : (
+                  <div className={styles.modalSpeakersGrid}>
+                    {selectedSession.speakers.map((speaker, idx) => (
+                      <div key={idx} className={styles.modalSpeakerCard}>
+                        <div className={styles.modalSpeakerAvatar}>
+                          <span className={styles.speakerInitials}>{getInitials(speaker.name)}</span>
+                        </div>
+                        <div>
+                          <h5 className="text-titanium-light font-semibold text-sm">{speaker.name}</h5>
+                          <p className="text-titanium-metallic text-xs">{speaker.title}</p>
+                          <p className="text-titanium-silver/60 text-xs">{speaker.organization}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              <div>
-                <h4 className="text-lg font-bold text-titanium-bright mb-1">Achievements</h4>
-                <div className="flex flex-wrap gap-1">
-                  {selectedSession.achievements.map((achievement) => (
-                    <span
-                      key={achievement}
-                      className="px-2 py-1 rounded bg-titanium-silver/10 border border-titanium-silver/20 text-titanium-silver text-sm"
-                    >
-                      {achievement}
-                    </span>
-                  ))}
-                </div>
-              </div>
+
               <div>
                 <h4 className="text-lg font-bold text-titanium-bright mb-1">Tags</h4>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-2">
                   {selectedSession.topic.tags.map((tag) => (
                     <span key={tag} className="text-sm text-titanium-silver/50">#{tag}</span>
                   ))}
                 </div>
               </div>
-            </div>
-            <div className="absolute" style={{ bottom: '0.05rem', right: '0.4rem' }}>
-              <Image
-                src="/personMask.png"
-                alt="Mystery Speaker Mask"
-                className={cn(styles.mysteryMaskMobile, 'drop-shadow-lg')}
-                width={80}
-                height={80}
-                draggable={false}
-                priority
-              />
             </div>
           </div>
         </div>
