@@ -14,7 +14,6 @@ const ScrollMask = () => {
   const heroContentRef = useRef<HTMLDivElement>(null)
   const hero1ContainerRef = useRef<HTMLDivElement>(null)
   const textLogoRef = useRef<HTMLDivElement>(null)
-  const whiteFillRef = useRef<HTMLDivElement>(null)
   const heroTextRef = useRef<HTMLHeadingElement>(null)
   const hero2ContainerRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -43,43 +42,25 @@ const ScrollMask = () => {
           pin: true,
           start: "top top",
           end: "+=3000",
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
         },
       })
 
-      // Scale down the main container - desktop only
-      if (!isMobile) {
-        tl.fromTo(heroMainRef.current,
-          { scale: 1.25 },
-          { scale: 1, duration: 1 }
-        )
-      }
+      // Set initial scale
+      tl.set(heroMainRef.current, { scale: 1.25 })
+
+      // Scale down the main container
+      tl.to(heroMainRef.current, { scale: 1, duration: 1 })
 
       // Fade out hero content
       tl.to(heroContentRef.current, { opacity: 0, duration: 0.9 }, "<")
 
-      // Fade in white fill - desktop only
+      // Shrink background logo size - only on desktop
       if (!isMobile) {
-        tl.to(whiteFillRef.current, { opacity: 1, duration: 3 }, "<-=1")
+        tl.to(heroMainRef.current, { backgroundSize: "35vh", duration: 1.5 }, "<+=0.2")
       }
 
-      // Shrink mask logo size - only on desktop (use fromTo for proper reversal)
-      if (!isMobile) {
-        tl.fromTo(heroMainRef.current,
-          { maskSize: "6000vh", webkitMaskSize: "6000vh" },
-          { maskSize: "35vh", webkitMaskSize: "35vh", duration: 1.5 },
-          "<+=0.2"
-        )
-      }
-
-      // On mobile, animate backgroundSize instead
+      // On mobile, fade in the textLogo earlier and smoother
       if (isMobile) {
-        tl.fromTo(heroMainRef.current,
-          { backgroundSize: "1000vh" },
-          { backgroundSize: "30vh", duration: 1.5 },
-          "<+=0.2"
-        )
         tl.fromTo(textLogoRef.current,
           { opacity: 0 },
           { opacity: 1, duration: 1.5 },
@@ -111,23 +92,6 @@ const ScrollMask = () => {
         isMobile ? "<0.5" : "<1.2"
       )
 
-      // Continue moving gradient down - simultaneous with fade
-      tl.to(heroTextRef.current,
-        {
-          backgroundImage: `radial-gradient(
-            circle at 50% -50vh, 
-            rgb(255, 212, 129) 0vh,
-            rgb(238, 70, 106) 50vh,
-            rgb(126, 35, 103) 90vh,
-            rgba(32, 31, 66, 0) 125.854vh
-          )`,
-          duration: 8,
-        }
-      )
-
-      // Fade out main container background - starts at same time as gradient move
-      tl.to(heroMainRef.current, { opacity: 0, duration: 3 }, "<+=1.4")
-
       // Fade in the logo overlay - desktop only (mobile already handled above)
       if (!isMobile) {
         tl.fromTo(textLogoRef.current,
@@ -143,6 +107,9 @@ const ScrollMask = () => {
           "<0.2"
         )
       }
+
+      // Hide main container
+      tl.set(heroMainRef.current, { opacity: 0 })
 
       // Scale down hero-1-container
       tl.to(hero1ContainerRef.current, { scale: 0.85, duration: 3 }, "<-=3")
@@ -202,8 +169,6 @@ const ScrollMask = () => {
       <div ref={hero1ContainerRef} className={styles.hero1Container}>
         {/* Main container with logo background */}
         <div ref={heroMainRef} className={styles.heroMainContainer}>
-          {/* White fill for cutout */}
-          <div ref={whiteFillRef} className={styles.whiteFill}></div>
           {/* Hero content overlay */}
           <div ref={heroContentRef} className={styles.heroContent}>
             <Hero />
