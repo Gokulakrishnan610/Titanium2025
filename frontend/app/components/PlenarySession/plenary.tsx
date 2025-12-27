@@ -237,18 +237,18 @@ export default function PlenarySessions({
 
       <div ref={containerRef} className="relative min-h-screen">
 
-        <div className="plenary-header absolute top-16 md:top-20 left-0 right-0 z-10 px-4 md:px-8">
-          <div className="flex flex-col gap-2 md:gap-4 mb-4">
-            <div className="text-center md:text-left">
-              <span className="inline-block text-xs md:text-sm font-mono text-titanium-metallic uppercase tracking-widest mb-1 md:mb-2">
+        <div className="plenary-header absolute top-32 md:top-28 left-0 right-0 z-10 px-4 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8 mb-4">
+            <div>
+              <span className="inline-block text-xs md:text-sm font-mono text-titanium-metallic uppercase tracking-widest mb-2 md:mb-4">
                 Unlock Knowledge
               </span>
-              <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold">
                 <span className="text-titanium-gradient">Plenary</span>{" "}
                 <span className="text-titanium-light">Sessions</span>
               </h2>
             </div>
-            <p className="text-titanium-metallic text-xs md:text-sm lg:text-base max-w-2xl text-center md:text-left mx-auto md:mx-0 px-2 md:px-0">
+            <p className="text-titanium-metallic text-sm md:text-lg max-w-xl text-left md:text-right pb-1">
               Engage with industry leaders and visionaries as they share insights on the future of technology and innovation.
             </p>
           </div>
@@ -256,8 +256,8 @@ export default function PlenarySessions({
         <div
           ref={scrollContainerRef}
           className={cn(
-            "flex gap-4 md:gap-6 lg:gap-8 pt-40 md:pt-48 lg:pt-56 xl:pt-64 pb-16 md:pb-24 pl-4 md:pl-8 pr-4 md:pr-8",
-            isMobile ? "flex-col items-center space-y-6" : "items-center",
+            "flex gap-4 md:gap-8 pt-32 md:pt-40 lg:pt-48 2xl:pt-64 pb-16 md:pb-24 pl-4 md:pl-8 pr-4 md:pr-8",
+            isMobile ? "flex-col items-center" : "items-center",
             styles.scrollContainer
           )}
         >
@@ -265,15 +265,15 @@ export default function PlenarySessions({
             <div
               key={session.id}
               className={cn(
-                "plenary-card w-full max-w-sm md:max-w-none md:w-[85vw] lg:w-[900px] rounded-2xl overflow-hidden mx-auto",
+                "plenary-card w-full md:w-[85vw] lg:w-[900px] rounded-2xl overflow-hidden",
                 !isMobile && "shrink-0",
                 styles.sessionCard
               )}
             >
-              <div className="relative w-full h-full bg-linear-to-br from-titanium-charcoal via-titanium-rich to-titanium-black border border-titanium-silver/20 backdrop-blur-xl p-4 md:p-6 flex flex-col min-h-[400px] md:min-h-[500px]">
+              <div className="relative w-full h-full bg-linear-to-br from-titanium-charcoal via-titanium-rich to-titanium-black border border-titanium-silver/20 backdrop-blur-xl p-6 md:p-6 flex flex-col">
                 {isMobile ? (
-                  <div className="relative flex flex-col justify-between w-full h-full min-h-[350px] p-2 gap-4 overflow-hidden">
-                    <div className="absolute top-2 right-2 z-10">
+                  <div className="relative flex flex-col justify-between w-full h-full min-h-[300px] p-4 gap-0 overflow-hidden">
+                    <div className="absolute top-4 right-4 z-10">
                       {session.isOtherSpeakers ? (
                         <div className={cn(styles.dayBadge, styles.otherBadge)}>
                           <span className="text-xs font-bold">SPECIAL</span>
@@ -286,27 +286,25 @@ export default function PlenarySessions({
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-col flex-1 justify-start min-h-0 mt-12 pr-2">
-                      <h3 className="text-base md:text-lg font-bold text-titanium-light leading-tight mb-3 pr-8">
+                    <div className="flex flex-col flex-1 justify-start min-h-0 mt-2">
+                      <h3 className="text-lg font-bold text-titanium-light leading-tight mt-2 mb-3 pr-16">
                         {session.sessionTitle}
                       </h3>
                       {session.awaitingConfirmation ? (
                         <span className={styles.revealingBadge}>Revealing Soon</span>
                       ) : (
-                        <p className="text-xs text-titanium-metallic mb-3">
+                        <p className="text-sm text-titanium-metallic mb-2">
                           {session.speakers.length} Speaker{session.speakers.length !== 1 ? 's' : ''}
                         </p>
                       )}
-                      <div className="mt-auto">
-                        <button
-                          onClick={() => setSelectedSession(session)}
-                          className="px-3 py-2 bg-titanium-silver/10 border border-titanium-silver/30 rounded-lg text-titanium-silver hover:bg-titanium-silver/20 transition-colors text-sm w-fit"
-                        >
-                          Know More
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => setSelectedSession(session)}
+                        className="mt-2 px-4 py-2 bg-titanium-silver/10 border border-titanium-silver/30 rounded-lg text-titanium-silver hover:bg-titanium-silver/20 transition-colors w-fit"
+                      >
+                        Know More
+                      </button>
                     </div>
-                    <div className="absolute bottom-2 right-2 flex -space-x-1">
+                    <div className="absolute bottom-4 right-4 flex -space-x-2">
                       {session.speakers.slice(0, 3).map((speaker, idx) => (
                         <div key={idx} className={styles.miniAvatar}>
                           <span className={styles.miniInitials}>{getInitials(speaker.name)}</span>
