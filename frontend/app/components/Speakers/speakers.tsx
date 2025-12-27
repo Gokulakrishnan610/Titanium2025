@@ -1,194 +1,208 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Linkedin, Twitter } from "lucide-react";
+import styles from "./speakers.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const speakers = [
+interface EmientSpeaker {
+  id: string;
+  date: string;
+  dateFormatted: string;
+  mainText: string;
+  accentText: string;
+  image: string;
+  imageSize?: 'normal' | 'medium' | 'large';
+}
+
+const eminentSpeakers: EmientSpeaker[] = [
   {
-    name: "Dr. Sarah Chen",
-    title: "Chief AI Officer",
-    company: "TechCorp Global",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
-    topic: "The Future of Generative AI",
+    id: "speaker1",
+    date: "12/2/2026",
+    dateFormatted: "12 FEB",
+    mainText: "SPEED",
+    accentText: "REDEFINED",
+    image: "/f1.png",
+    imageSize: 'large',
   },
   {
-    name: "Marcus Johnson",
-    title: "VP of Engineering",
-    company: "CloudScale Inc",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-    topic: "Scaling Infrastructure for Billions",
+    id: "speaker2",
+    date: "13/2/2026",
+    dateFormatted: "13 FEB",
+    mainText: "BEYOND",
+    accentText: "EARTH",
+    image: "/astronaut.png",
+    imageSize: 'medium',
   },
   {
-    name: "Elena Rodriguez",
-    title: "Security Researcher",
-    company: "CyberDefense Labs",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face",
-    topic: "Zero Trust Architecture",
-  },
-  {
-    name: "David Kim",
-    title: "Founder & CEO",
-    company: "QuantumLeap",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-    topic: "Quantum Computing Revolution",
-  },
-  {
-    name: "Priya Sharma",
-    title: "Head of Product",
-    company: "MetaVerse Labs",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
-    topic: "Building the Spatial Web",
-  },
-  {
-    name: "James Wright",
-    title: "Distinguished Engineer",
-    company: "OpenSource Foundation",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
-    topic: "Open Source at Scale",
+    id: "speaker3",
+    date: "14/2/2026",
+    dateFormatted: "14 FEB",
+    mainText: "EVOLVE",
+    accentText: "HUMANITY",
+    image: "/person.png",
   },
 ];
 
 export default function Speakers() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const blockRef = useRef<HTMLDivElement>(null);
+
+  const playBlockAnimation = () => {
+    if (!blockRef.current) return;
+
+    gsap.killTweensOf(blockRef.current);
+
+    gsap.timeline()
+      .set(blockRef.current, { left: "-100%", right: "auto", width: "100%" })
+      .to(blockRef.current, {
+        left: "0%",
+        duration: 0.5,
+        ease: "power2.inOut"
+      })
+      .to(blockRef.current, {
+        left: "100%",
+        duration: 0.5,
+        ease: "power2.inOut"
+      });
+  };
+
+  const handleDateClick = (index: number) => {
+    if (index === activeIndex) return;
+
+    gsap.killTweensOf(blockRef.current);
+
+    gsap.timeline()
+      .set(blockRef.current, { left: "-100%", right: "auto", width: "100%" })
+      .to(blockRef.current, {
+        left: "0%",
+        duration: 0.3,
+        ease: "power2.in"
+      })
+      .call(() => {
+        setDisplayIndex(index);
+        setActiveIndex(index);
+      })
+      .to(blockRef.current, {
+        left: "100%",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(playBlockAnimation, 400);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Section header animation
-      gsap.fromTo(
-        ".speakers-header",
-        { opacity: 0, y: 50 },
+      gsap.fromTo(".speakers-header",
+        { opacity: 0, y: 40 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".speakers-header",
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
+          opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
+          scrollTrigger: { trigger: ".speakers-header", start: "top 85%" },
         }
       );
 
-      // Speaker cards animation
-      gsap.set(".speaker-card", { opacity: 0, y: 30 });
-      
-      gsap.to(".speaker-card", {
-        opacity: 1,
-        y: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".speakers-grid",
-          start: "top 85%",
-          end: "bottom 15%",
-          scrub: 1,
-          toggleActions: "play reverse play reverse",
-        },
-      });
+      gsap.fromTo(".date-tab",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: "power2.out",
+          scrollTrigger: { trigger: ".date-tabs", start: "top 90%" },
+        }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  return (
-    <section
-      ref={sectionRef}
-      id="speakers"
-      className="relative py-32 bg-titanium-rich overflow-hidden"
-    >
-      {/* Background */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-titanium-silver/20 to-transparent" />
+  const currentSpeaker = eminentSpeakers[displayIndex];
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="speakers-header text-center mb-16">
-          <span className="inline-block text-sm font-mono text-titanium-metallic uppercase tracking-widest mb-4">
-            Learn from the Best
+  return (
+    <section ref={sectionRef} id="speakers" className={styles.speakersSection}>
+      <div className={styles.gridPattern} />
+      <div
+        className={`${styles.speakerImage} ${currentSpeaker.imageSize === 'large' ? styles.speakerImageLarge : ''} ${currentSpeaker.imageSize === 'medium' ? styles.speakerImageMedium : ''}`}
+        style={{ backgroundImage: `url(${currentSpeaker.image})` }}
+      />
+
+      {displayIndex === 0 && (
+        <div className={styles.speedLines}>
+          <div className={styles.speedLine} />
+          <div className={styles.speedLine} />
+          <div className={styles.speedLine} />
+          <div className={styles.speedLine} />
+          <div className={styles.speedLine} />
+        </div>
+      )}
+
+      {displayIndex === 1 && (
+        <div className={styles.starsContainer}>
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className={styles.star}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {displayIndex === 2 && (
+        <div className={styles.greenAura} />
+      )}
+
+      <div className={styles.container}>
+        <div className="speakers-header text-center mb-12 md:mb-20">
+          <span className="inline-block text-xs md:text-sm font-mono text-titanium-metallic uppercase tracking-widest mb-4">
+            Mystery Guests
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold">
             <span className="text-titanium-gradient">Eminent</span>{" "}
             <span className="text-titanium-light">Speakers</span>
           </h2>
-          <p className="text-titanium-metallic text-lg max-w-2xl mx-auto">
-            World-renowned experts sharing insights that will shape the future of technology
-          </p>
         </div>
 
-        {/* Speakers Grid */}
-        <div className="speakers-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {speakers.map((speaker) => (
-            <div
-              key={speaker.name}
-              className="speaker-card group titanium-card rounded-2xl overflow-hidden"
-            >
-              {/* Image Container */}
-              <div className="relative h-72 overflow-hidden">
-                <img
-                  src={speaker.image}
-                  alt={speaker.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-titanium-black via-transparent to-transparent" />
-                
-                {/* Social Links */}
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <a
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-titanium-charcoal/80 backdrop-blur-sm flex items-center justify-center text-titanium-silver hover:text-titanium-white hover:bg-titanium-silver/20 transition-all duration-300"
-                  >
-                    <Twitter size={18} />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-titanium-charcoal/80 backdrop-blur-sm flex items-center justify-center text-titanium-silver hover:text-titanium-white hover:bg-titanium-silver/20 transition-all duration-300"
-                  >
-                    <Linkedin size={18} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-titanium-white mb-1">
-                  {speaker.name}
-                </h3>
-                <p className="text-titanium-silver text-sm mb-2">
-                  {speaker.title}
-                </p>
-                <p className="text-titanium-metallic text-sm mb-4">
-                  {speaker.company}
-                </p>
-                <div className="pt-4 border-t border-titanium-silver/10">
-                  <span className="text-xs font-mono text-titanium-metallic uppercase tracking-wider">
-                    Speaking on
-                  </span>
-                  <p className="text-titanium-light mt-1">{speaker.topic}</p>
-                </div>
-              </div>
+        <div className={styles.slideContainer}>
+          <div className={styles.textContainer}>
+            <div className={styles.textWrapper}>
+              <span className={styles.mainText}>{currentSpeaker.mainText}</span>
+              <span className={styles.accentText}>{currentSpeaker.accentText}</span>
             </div>
+            <div ref={blockRef} className={styles.sweepBlock} />
+          </div>
+
+          <div className={styles.dateTag}>
+            {currentSpeaker.date}
+          </div>
+
+          <div className={styles.badge}>
+            Revealing Soon
+          </div>
+        </div>
+
+        <div className={`date-tabs ${styles.dateTabs}`}>
+          {eminentSpeakers.map((speaker, index) => (
+            <button
+              key={speaker.id}
+              onClick={() => handleDateClick(index)}
+              className={`date-tab ${styles.dateTab} ${index === activeIndex ? styles.active : ""}`}
+            >
+              <span className={styles.tabDay}>{speaker.dateFormatted}</span>
+              <span className={styles.tabYear}>2026</span>
+            </button>
           ))}
         </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-12">
-          <a
-            href="#"
-            className="btn-secondary px-8 py-4 rounded-full text-base font-semibold inline-block"
-          >
-            View All Speakers
-          </a>
-        </div>
       </div>
-
-      {/* Bottom Gradient Line */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-titanium-silver/20 to-transparent" />
     </section>
   );
 }

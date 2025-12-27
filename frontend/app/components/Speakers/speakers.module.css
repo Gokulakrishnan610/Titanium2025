@@ -1,0 +1,383 @@
+.speakersSection {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: var(--color-titanium-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+}
+
+.gridPattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image:
+        linear-gradient(rgba(192, 192, 192, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(192, 192, 192, 0.1) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.speedLines {
+    position: absolute;
+    top: 30%;
+    right: 0;
+    width: 60%;
+    height: 40%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.speedLine {
+    position: absolute;
+    left: -100%;
+    height: 2px;
+    width: 30%;
+    background: linear-gradient(90deg, transparent, rgba(192, 192, 192, 0.3), transparent);
+    animation: speedMove 2s linear infinite;
+}
+
+.speedLine:nth-child(1) {
+    top: 20%;
+    animation-delay: 0s;
+}
+
+.speedLine:nth-child(2) {
+    top: 35%;
+    animation-delay: 0.4s;
+    width: 25%;
+}
+
+.speedLine:nth-child(3) {
+    top: 50%;
+    animation-delay: 0.8s;
+    width: 35%;
+}
+
+.speedLine:nth-child(4) {
+    top: 65%;
+    animation-delay: 1.2s;
+    width: 20%;
+}
+
+.speedLine:nth-child(5) {
+    top: 80%;
+    animation-delay: 1.6s;
+    width: 28%;
+}
+
+@keyframes speedMove {
+    0% {
+        left: -30%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 110%;
+        opacity: 0;
+    }
+}
+
+.starsContainer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+}
+
+.greenAura {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 30%, transparent 60%);
+    animation: auraPulse 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes auraPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.slideContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.speakerImage {
+    position: absolute;
+    top: 50%;
+    right: -5%;
+    transform: translateY(-50%);
+    width: 450px;
+    height: 450px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    filter: grayscale(100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+@media (min-width: 768px) {
+    .speakerImage {
+        width: 500px;
+        height: 500px;
+        opacity: 0.2;
+        right: -3%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .speakerImage {
+        width: 600px;
+        height: 600px;
+        right: 0%;
+    }
+}
+
+.speakerImageLarge {
+    width: 650px;
+    height: 650px;
+    transform: translateY(-40%);
+    right: -10%;
+}
+
+@media (min-width: 768px) {
+    .speakerImageLarge {
+        width: 950px;
+        height: 950px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .speakerImageLarge {
+        width: 1150px;
+        height: 1150px;
+    }
+}
+
+.speakerImageMedium {
+    width: 500px;
+    height: 500px;
+    right: -10%;
+}
+
+@media (min-width: 768px) {
+    .speakerImageMedium {
+        width: 600px;
+        height: 600px;
+        right: -8%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .speakerImageMedium {
+        width: 750px;
+        height: 750px;
+        right: -5%;
+    }
+}
+
+.textContainer {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+@media (min-width: 768px) {
+    .textWrapper {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+}
+
+.mainText {
+    font-size: clamp(3.5rem, 15vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+}
+
+.accentText {
+    font-size: clamp(3.5rem, 15vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(192, 192, 192, 0.5);
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+}
+
+.sweepBlock {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #C0C0C0;
+    pointer-events: none;
+}
+
+.dateTag {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(192, 192, 192, 0.6);
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+}
+
+@media (min-width: 768px) {
+    .dateTag {
+        font-size: 1.25rem;
+    }
+}
+
+.badge {
+    padding: 0.5rem 1.25rem;
+    background: rgba(250, 204, 21, 0.1);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #facc15;
+}
+
+.dateTabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding: 0.4rem;
+    background: rgba(192, 192, 192, 0.03);
+    border-radius: 14px;
+    border: 1px solid rgba(192, 192, 192, 0.1);
+}
+
+@media (min-width: 768px) {
+    .dateTabs {
+        gap: 0.75rem;
+    }
+}
+
+.dateTab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+@media (min-width: 768px) {
+    .dateTab {
+        padding: 1rem 1.5rem;
+    }
+}
+
+.dateTab:hover {
+    background: rgba(192, 192, 192, 0.05);
+}
+
+.active {
+    background: rgba(192, 192, 192, 0.1);
+    border-color: rgba(192, 192, 192, 0.25);
+}
+
+.tabDay {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #d4d4d4;
+}
+
+@media (min-width: 768px) {
+    .tabDay {
+        font-size: 0.875rem;
+    }
+}
+
+.tabYear {
+    font-size: 0.5rem;
+    color: rgba(192, 192, 192, 0.5);
+    margin-top: 0.15rem;
+}
+
+@media (min-width: 768px) {
+    .tabYear {
+        font-size: 0.625rem;
+    }
+}
+
+.active .tabDay {
+    color: #ffffff;
+}
