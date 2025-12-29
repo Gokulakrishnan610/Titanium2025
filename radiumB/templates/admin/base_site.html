@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+<div style="float: right; margin-right: 20px; margin-top: 10px;">
+    <a href="{% url 'api_tester' %}" style="color: #fff !important; background: #417690 !important; padding: 8px 15px; border-radius: 4px; text-decoration: none !important; font-weight: bold; display: inline-block; font-size: 13px;">
+        🔧 API Tester
+    </a>
+</div>
+{% endblock %}

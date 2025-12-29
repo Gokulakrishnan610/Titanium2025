@@ -1,0 +1,54 @@
+{% extends "admin/index.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    .developer-tools-box {
+        margin-bottom: 20px !important;
+        padding: 15px !important;
+        background: #e7f2fa !important;
+        border-left: 4px solid #417690 !important;
+        border-radius: 4px !important;
+    }
+    .developer-tools-box h2 {
+        margin-top: 0 !important;
+        color: #417690 !important;
+        font-size: 20px !important;
+        font-weight: bold !important;
+    }
+    .developer-tools-box p {
+        margin-bottom: 10px !important;
+        color: #333 !important;
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+    }
+    .api-tester-button {
+        display: inline-block !important;
+        background: #417690 !important;
+        color: white !important;
+        padding: 10px 20px !important;
+        text-decoration: none !important;
+        border-radius: 4px !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+    }
+    .api-tester-button:hover {
+        background: #2e5266 !important;
+        color: white !important;
+        text-decoration: none !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="developer-tools-box">
+    <h2>🔧 Developer Tools</h2>
+    <p>Test and explore all API endpoints directly from the admin interface.</p>
+    <a href="{% url 'api_tester' %}" class="api-tester-button">
+        Open API Tester
+    </a>
+</div>
+
+{{ block.super }}
+{% endblock %}

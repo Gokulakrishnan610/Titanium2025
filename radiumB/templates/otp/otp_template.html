@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Email Verification - RadiumB</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+        }
+        .logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .header h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .otp-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            background-color: #000000;
+            border: 3px solid #007bff;
+            border-radius: 10px;
+        }
+        .otp-section h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .otp-code {
+            font-family: 'Courier New', monospace;
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 8px;
+            background-color: #333333;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #007bff;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .warning {
+            background-color: #333333;
+            border: 1px solid #ff6b6b;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333333;
+            color: #888888;
+            font-size: 12px;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{% static 'assets/DEVS_White.png' %}" alt="DEVS Logo" class="logo">
+            <h1>🔐 Email Verification</h1>
+        </div>
+
+        <div class="content">
+            <div class="greeting">
+                <p>Hello <strong>{{ user.first_name|default:user.username }}</strong>,</p>
+                <p>Welcome to <strong>RadiumB</strong>! To complete your account verification, please use the following OTP:</p>
+            </div>
+
+            <div class="otp-section">
+                <h2>Your Verification Code</h2>
+                <div class="otp-code">{{ otp }}</div>
+            </div>
+
+            <div class="warning">
+                ⚠️ This OTP will expire in <strong>10 minutes</strong>. Do not share this code with anyone.
+            </div>
+
+            <p>If you didn't request this verification, please ignore this email.</p>
+        </div>
+
+        <div class="footer">
+            <p><strong>Best regards,</strong></p>
+            <p><strong>RadiumB Team</strong></p>
+            <p>Rajalakshmi Engineering College</p>
+            <p style="color: #666666;">
+                This is an automated message. Please do not reply to this email.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

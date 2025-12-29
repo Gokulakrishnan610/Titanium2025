@@ -1,0 +1,81 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Internal Booking{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        {% comment %} Logo (inline) {% endcomment %}
+        <img src="{{ logo_url }}" alt="DEVS Logo" class="logo">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div class="module">
+        <h2>Selected Users</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td><strong>{{ user.username }}</strong></td>
+                    <td>{{ user.email }}</td>
+                    <td><strong>{{ user.first_name }} {{ user.last_name }}</strong></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="module">
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="user_ids" value="{{ user_ids }}">
+
+            <h2>Select Event</h2>
+            <div class="form-row">
+                <label for="event_id">Event:</label>
+                <select name="event_id" id="event_id" required>
+                    <option value="">Choose an event...</option>
+                    {% for event in events %}
+                    <option value="{{ event.id }}">
+                        <strong>{{ event.event_name }}</strong> - {{ event.event_date|date:"M j, Y" }} (<strong>{{ event.get_payment_type_display }}</strong>)
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="submit-row">
+                <input type="submit" value="Book Users" class="default">
+                <a href="{% url 'admin:users_user_changelist' %}" class="cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+body { background-color: #000000; color: #ffffff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; background-color: #000000; }
+.header { text-align: center; padding: 20px; background-color: #1a1a1a; border-radius: 10px; margin-bottom: 20px; }
+.logo { max-width: 120px; height: auto; margin-bottom: 10px; }
+.header h1 { color: #ffffff; margin: 0; font-weight: bold; }
+.module { margin-bottom: 30px; background: #1a1a1a; border: 1px solid #333333; border-radius: 4px; color: #ffffff; }
+.module h2 { background: #000000; padding: 10px 15px; margin: 0; border-bottom: 1px solid #333333; color: #007bff; font-weight: bold; }
+.module table { width: 100%; border-collapse: collapse; color: #ffffff; }
+.module table th, .module table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #333333; color: #ffffff; }
+.module table th { background-color: #333333; font-weight: bold; }
+.form-row { padding: 15px; border-bottom: 1px solid #333333; }
+.form-row label { display: block; margin-bottom: 5px; font-weight: bold; color: #ffffff; }
+.form-row select { width: 100%; padding: 8px; border: 1px solid #555555; border-radius: 4px; background-color: #1a1a1a; color: #ffffff; }
+.submit-row { padding: 15px; background: #1a1a1a; text-align: right; border-top: 1px solid #333333; }
+.submit-row input, .submit-row a { padding: 8px 16px; border-radius: 4px; text-decoration: none; display: inline-block; margin-left: 10px; font-weight: bold; }
+.submit-row .default { background: #007bff; color: white; border: none; }
+.submit-row .cancel { background: #6c757d; color: white; }
+</style>
+{% endblock %}

@@ -1,0 +1,152 @@
+.faqItem {
+  position: relative;
+  background: rgba(28, 28, 28, 0.8);
+  border: 1px solid rgba(192, 192, 192, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+  border-color: rgba(192, 192, 192, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2),
+              0 0 20px rgba(192, 192, 192, 0.05);
+}
+
+.faqItem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(192, 192, 192, 0.1) 20%, 
+    rgba(192, 192, 192, 0.3) 50%, 
+    rgba(192, 192, 192, 0.1) 80%, 
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.faqItem:hover::before {
+  opacity: 1;
+}
+
+/* Search input focus effects */
+.faq-controls input:focus {
+  box-shadow: 0 0 0 1px rgba(192, 192, 192, 0.3),
+              0 0 20px rgba(192, 192, 192, 0.1);
+}
+
+/* Category button hover effects */
+.faq-controls button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth accordion animation */
+.faq-item .overflow-hidden {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease;
+}
+
+/* Loading animation for search */
+@keyframes searchPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.search-loading {
+  animation: searchPulse 1.5s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .faq-controls {
+    padding: 0 1rem;
+  }
+  
+  .faq-controls input {
+    padding: 1rem 1rem 1rem 3rem;
+    font-size: 0.875rem;
+  }
+  
+  .faq-controls button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .faqItem {
+    margin: 0 1rem;
+  }
+  
+  .faqItem button {
+    padding: 1rem;
+  }
+  
+  .faqItem h3 {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-controls .flex-wrap {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.5rem;
+  }
+  
+  .faq-controls button {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+/* Enhanced hover effects for desktop */
+@media (min-width: 1024px) {
+  .faqItem:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(192, 192, 192, 0.1);
+  }
+}
+
+/* Accessibility improvements */
+.faqItem button:focus {
+  outline: 2px solid rgba(192, 192, 192, 0.5);
+  outline-offset: 2px;
+}
+
+.faq-controls button:focus {
+  outline: 2px solid rgba(192, 192, 192, 0.5);
+  outline-offset: 2px;
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .faqItem {
+    background: rgba(18, 18, 18, 0.9);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .faqItem,
+  .faq-controls button,
+  .faq-item .overflow-hidden {
+    transition: none;
+  }
+  
+  .faqItem:hover {
+    transform: none;
+  }
+}

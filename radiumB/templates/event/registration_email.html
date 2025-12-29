@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration Confirmation - {{ event.event_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 520px;
+            margin: 32px auto;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px #ffffff22;
+            padding: 32px 24px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .logo {
+            max-width: 140px;
+            height: auto;
+            margin-bottom: 12px;
+            filter: brightness(0) invert(1); /* makes light logos white-friendly */
+        }
+        .header h1 {
+            font-size: 1.6em;
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+        }
+        .success-badge {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+        .content {
+            margin-top: 24px;
+        }
+        .greeting {
+            font-size: 1.05em;
+            margin-bottom: 18px;
+            color: #fff;
+        }
+        .event-details {
+            background: #111;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 18px 0;
+        }
+        .event-details h3 {
+            color: #fff;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 6px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #ddd;
+        }
+        .detail-value {
+            font-weight: 500;
+            color: #fff;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 32px 0;
+        }
+        .qr-section h3 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .qr-code {
+            display: block;
+            margin: 0 auto;
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid #fff;
+            background: #000;
+        }
+        .instructions {
+            background: #111;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 20px;
+            color: #fff;
+        }
+        .instructions h4 {
+            font-weight: 600;
+            color: #fff;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 6px;
+        }
+        .instructions ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #ccc;
+        }
+        .footer {
+            margin-top: 32px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .highlight {
+            color: #fff;
+            background: #222;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .qr-desc {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="{{ logo_url }}" alt="DEVS Logo" class="logo">
+            <h1>🎉 Registration Confirmed!</h1>
+            <div class="success-badge">Registered</div>
+        </div>
+
+        <div class="content">
+            <div class="greeting">
+                <p>Dear <strong>{{ user.username }}</strong>,</p>
+                <p>Your registration for <strong>{{ event.event_name }}</strong> has been successfully confirmed.</p>
+            </div>
+
+            <div class="event-details">
+                <h3>📅 Event Details</h3>
+                <div class="detail-row">
+                    <span class="detail-label">Event Name:</span>
+                    <span class="detail-value">{{ event.event_name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Date & Time:</span>
+                    <span class="detail-value">{{ event.event_date|date:"F j, Y \a\t g:i A" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Venue:</span>
+                    <span class="detail-value">{{ event.venue|default:"To be announced" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Event Type:</span>
+                    <span class="detail-value">{{ event.get_participation_type_display }}</span>
+                </div>
+                {% if event.payment_type == 'paid' %}
+                <div class="detail-row">
+                    <span class="detail-label">Registration Fee:</span>
+                    <span class="detail-value">₹{{ event.price }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if is_online_event %}
+            <div class="qr-section">
+                <h3>🔗 Meeting Link</h3>
+                <p class="qr-desc">Use this link to join the online event:</p>
+                <div style="background: #111; border: 1px solid #444; border-radius: 8px; padding: 16px; margin: 16px 0; text-align: center;">
+                    <a href="{{ meeting_url }}" style="color: #4F46E5; text-decoration: none; font-weight: 600; font-size: 16px;">{{ meeting_url }}</a>
+                </div>
+                <p style="color: #ccc; font-size: 14px; margin-top: 8px;">Save this link and join the meeting at the scheduled time.</p>
+            </div>
+            {% else %}
+            <div class="qr-section">
+                <h3>Your Check-in QR Code</h3>
+                <p class="qr-desc">Present this QR code at the entrance for quick attendance:</p>
+                <img src="cid:qr_code" alt="Registration QR Code" class="qr-code">
+            </div>
+            {% endif %}
+
+            <div class="instructions">
+                <h4>Important Instructions</h4>
+                <ul>
+                    {% if is_online_event %}
+                    <li>Keep this email safe — it contains your meeting link.</li>
+                    <li>Join the meeting using the provided link at the scheduled time.</li>
+                    <li>Test your audio/video setup before the event starts.</li>
+                    <li>Ensure you have a stable internet connection.</li>
+                    {% else %}
+                    <li>Keep this email safe — it contains your unique entry QR code.</li>
+                    <li>Arrive at the venue at least 30 minutes before the event starts.</li>
+                    <li>Show your QR code to the check-in staff for attendance marking.</li>
+                    <li>Bring a valid ID proof along with this QR code.</li>
+                    {% endif %}
+                    {% if event.payment_type == 'paid' %}
+                    <li>Ensure your payment is completed before the event date.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>— Team DEVS REC</strong></p>
+            <p>Rajalakshmi Engineering College</p>
+            <p style="font-size: 12px; color: #777;">
+                This is an automated email. Please do not reply.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

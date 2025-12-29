@@ -1,0 +1,87 @@
+.aboutSection {
+  padding: 6rem 2rem;
+  background-color: #030014;
+  color: white;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.heading {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, #d5d1da 0%, #d1ced0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;  position: relative;
+  z-index: 10;}
+
+.modelContainer {
+  width: 400px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas {
+  width: 800px !important;
+  height: 600px !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: none !important;
+  margin-left: -400px !important;
+  margin-top: -300px !important;
+  pointer-events: auto !important;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  text-align: center;
+  max-width: 800px;
+}
+
+@media (max-width: 768px) {
+  .titleRow {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .modelContainer {
+    width: 150px; /* Fixed width for mobile to ensure it fits side-by-side */
+    height: 150px;
+    overflow: visible; /* Allow model to spill out slightly if needed, but canvas is huge so be careful */
+  }
+  
+  .heading {
+    font-size: 2.5rem;
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+}
